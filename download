@@ -1,0 +1,131 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
+import heroImg from "@/assets/hero.jpg";
+import { SiteHeader, SiteFooter, PageHero } from "@/components/site";
+
+export const Route = createFileRoute("/kontakt")({
+  head: () => ({
+    meta: [
+      { title: "Kontakt – Gjini Gartenbau" },
+      { name: "description", content: "Gjini Gartenbau, Blumenweg 6, 5702 Niederlenz. Telefon 062 891 36 23. Wir freuen uns auf Ihre Anfrage." },
+      { property: "og:title", content: "Kontakt – Gjini Gartenbau" },
+      { property: "og:description", content: "Persönliche Beratung in Niederlenz AG – kostenlos und unverbindlich." },
+      { property: "og:url", content: "/kontakt" },
+    ],
+    links: [{ rel: "canonical", href: "/kontakt" }],
+  }),
+  component: ContactPage,
+});
+
+function ContactPage() {
+  return (
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <PageHero
+        eyebrow="Kontakt"
+        title="Sprechen wir über Ihren Garten."
+        subtitle="Wir melden uns innerhalb von 24 Stunden zurück und vereinbaren ein unverbindliches Beratungsgespräch."
+        image={heroImg}
+      />
+
+      <section className="py-24 md:py-32">
+        <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <p className="eyebrow">Direktkontakt</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">
+              Persönlich für Sie da.
+            </h2>
+
+            <div className="mt-10 space-y-5">
+              <ContactRow icon={MapPin} title="Adresse">
+                Gjini Gartenbau<br />Blumenweg 6, 5702 Niederlenz
+              </ContactRow>
+              <ContactRow icon={Phone} title="Telefon">
+                <a href="tel:+41628913623" className="hover:text-primary">062 891 36 23</a><br />
+                <a href="tel:+41792883535" className="hover:text-primary">079 288 35 35</a>
+              </ContactRow>
+              <ContactRow icon={Mail} title="E-Mail">
+                <a href="mailto:info@gjini-gartenbau.ch" className="hover:text-primary">info@gjini-gartenbau.ch</a>
+              </ContactRow>
+              <ContactRow icon={Clock} title="Öffnungszeiten">
+                Mo–Fr: 07:30 – 17:30<br />Sa: nach Vereinbarung
+              </ContactRow>
+            </div>
+
+            <div className="mt-10 overflow-hidden rounded-lg border border-border shadow-soft">
+              <iframe
+                title="Standort Gjini Gartenbau"
+                src="https://www.google.com/maps?q=Blumenweg+6,+5702+Niederlenz,+Schweiz&output=embed"
+                className="h-72 w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+
+          <ContactForm />
+        </div>
+      </section>
+
+      <SiteFooter />
+    </div>
+  );
+}
+
+function ContactRow({ icon: Icon, title, children }: { icon: typeof Phone; title: string; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-4">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-sage/20 text-primary ring-1 ring-sage/40">
+        <Icon className="h-4 w-4" />
+      </span>
+      <div>
+        <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">{title}</div>
+        <div className="mt-1 text-sm text-foreground">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function ContactForm() {
+  const [sent, setSent] = useState(false);
+  return (
+    <form
+      onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+      className="rounded-xl border border-border bg-card p-7 shadow-card md:p-10"
+    >
+      <h3 className="font-display text-2xl font-semibold">Kostenlose Beratung anfragen</h3>
+      <p className="mt-2 text-sm text-muted-foreground">Alle Felder mit * sind erforderlich.</p>
+
+      <div className="mt-7 grid gap-5">
+        <Field label="Name *" name="name" required />
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field label="Telefon *" name="phone" type="tel" required />
+          <Field label="E-Mail *" name="email" type="email" required />
+        </div>
+        <Field label="Nachricht" name="message" textarea />
+        <button
+          type="submit"
+          className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
+        >
+          {sent ? "Vielen Dank – wir melden uns!" : "Anfrage senden"}
+          {!sent && <ArrowRight className="h-4 w-4" />}
+        </button>
+      </div>
+    </form>
+  );
+}
+
+function Field({ label, name, type = "text", required, textarea }: { label: string; name: string; type?: string; required?: boolean; textarea?: boolean }) {
+  const base = "w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/15";
+  return (
+    <label className="block">
+      <span className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{label}</span>
+      {textarea ? (
+        <textarea name={name} rows={4} className={base} />
+      ) : (
+        <input name={name} type={type} required={required} className={base} />
+      )}
+    </label>
+  );
+}

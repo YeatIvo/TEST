@@ -1,0 +1,206 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Check, Star, Award, Sparkles, Shield, Leaf } from "lucide-react";
+
+import heroImg from "@/assets/hero.jpg";
+import aboutImg from "@/assets/about.jpg";
+import { SiteHeader, SiteFooter, CTASection } from "@/components/site";
+import { services, testimonials } from "@/lib/site-data";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Gjini Gartenbau – Ihr Traumgarten beginnt hier" },
+      { name: "description", content: "Familienunternehmen aus Niederlenz AG. Hochwertiger Gartenbau, Gestaltung, Pflege und Natursteinarbeiten – seit 1997." },
+      { property: "og:title", content: "Gjini Gartenbau – Ihr Traumgarten beginnt hier" },
+      { property: "og:description", content: "Seit 1997 gestalten wir einzigartige Gärten mit Leidenschaft und Präzision." },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+  }),
+  component: HomePage,
+});
+
+function HomePage() {
+  return (
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <Hero />
+      <TrustBar />
+      <AboutTeaser />
+      <ServicesTeaser />
+      <WhyUs />
+      <TestimonialsSection />
+      <CTASection />
+      <SiteFooter />
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="relative isolate overflow-hidden">
+      <img src={heroImg} alt="Hochwertig gestalteter Garten in der Schweiz" width={1920} height={1280} className="absolute inset-0 -z-10 h-full w-full object-cover" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#23412D]/85 via-[#23412D]/55 to-[#23412D]/80" />
+      <div className="container-page flex min-h-[88vh] flex-col justify-center py-24 text-white md:min-h-[92vh]">
+        <div className="max-w-3xl">
+          <h1 className="fade-up-delay-1 font-display text-4xl font-semibold leading-[1.05] text-white sm:text-6xl md:text-7xl">
+
+            Ihr Traumgarten<br />beginnt hier.
+          </h1>
+          <p className="fade-up-delay-2 mt-7 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Seit 1997 gestalten wir einzigartige Gärten mit Leidenschaft, Präzision und handwerklicher Qualität – persönlich, zuverlässig und mit Sinn für das Wesentliche.
+          </p>
+          <div className="fade-up-delay-2 mt-10 flex flex-wrap gap-3">
+            <Link to="/kontakt" className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-primary shadow-soft transition hover:bg-sand">
+              Kostenlose Beratung anfragen <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+            </Link>
+            <Link to="/referenzen" className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-white/10">
+              Referenzen ansehen
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TrustBar() {
+  const items = ["Seit 1997", "Familienunternehmen", "Persönliche Beratung", "Hochwertige Ausführung"];
+  return (
+    <section className="border-b border-border bg-sand">
+      <div className="container-page grid grid-cols-2 gap-4 py-8 md:grid-cols-4">
+        {items.map((t) => (
+          <div key={t} className="flex items-center justify-center gap-2.5 text-sm font-medium text-primary">
+            <Check className="h-4 w-4 text-sage" strokeWidth={2.5} />
+            <span>{t}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function AboutTeaser() {
+  return (
+    <section className="py-24 md:py-32">
+      <div className="container-page grid items-center gap-12 md:grid-cols-2 md:gap-20">
+        <div className="relative">
+          <img src={aboutImg} alt="Gjini Gartenbau bei der Arbeit" width={1280} height={1280} loading="lazy" className="aspect-[4/5] w-full rounded-lg object-cover shadow-card" />
+          <div className="absolute -bottom-6 -right-4 hidden rounded-lg bg-primary px-7 py-5 text-primary-foreground shadow-card md:block">
+            <div className="font-display text-4xl font-semibold leading-none">25+</div>
+            <div className="mt-1.5 text-xs uppercase tracking-[0.18em] opacity-80">Jahre Erfahrung</div>
+          </div>
+        </div>
+        <div>
+          <p className="eyebrow">Über uns</p>
+          <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+            Familienunternehmen aus Niederlenz AG.
+          </h2>
+          <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
+            Seit über 25 Jahren realisieren wir hochwertige Gartenprojekte in der Region. Unsere Arbeit lebt von persönlicher Beratung, sauberer Ausführung und einem feinen Gespür für Materialien und Proportionen.
+          </p>
+          <Link to="/ueber-uns" className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all">
+            Mehr über uns erfahren <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ServicesTeaser() {
+  const featured = services.slice(0, 4);
+  return (
+    <section className="bg-sand py-24 md:py-32">
+      <div className="container-page">
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <p className="eyebrow">Unsere Leistungen</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+              Alles aus einer Hand.
+            </h2>
+          </div>
+          <Link to="/leistungen" className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all">
+            Alle Leistungen <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((s) => (
+            <article key={s.slug} className="group overflow-hidden rounded-lg bg-card shadow-soft transition hover:shadow-card">
+              <div className="aspect-[4/5] overflow-hidden">
+                <img src={s.img} alt={s.title} width={1024} height={1280} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6">
+                <h3 className="font-display text-xl font-semibold">{s.title}</h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WhyUs() {
+  const items = [
+    { icon: Award, title: "Über 25 Jahre Erfahrung", text: "Bewährte Expertise in jedem Gewerk – von der Planung bis zur Pflege." },
+    { icon: Sparkles, title: "Hohe Qualität", text: "Wir arbeiten ausschliesslich mit hochwertigen Materialien und Methoden." },
+    { icon: Shield, title: "Zuverlässige Umsetzung", text: "Pünktlich, sauber und transparent – auf uns ist Verlass." },
+    { icon: Leaf, title: "Individuelle Lösungen", text: "Jeder Garten ist einzigartig – Ihr Konzept entsteht massgeschneidert." },
+  ];
+  return (
+    <section className="py-24 md:py-32">
+      <div className="container-page">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="eyebrow justify-center">Warum Gjini Gartenbau</p>
+          <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+            Schweizer Qualität, persönlich umgesetzt.
+          </h2>
+        </div>
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((it) => (
+            <div key={it.title} className="rounded-lg border border-border bg-card p-7 transition hover:border-sage hover:shadow-soft">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-sand text-primary">
+                <it.icon className="h-5 w-5" />
+              </span>
+              <h3 className="mt-6 font-display text-lg font-semibold">{it.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{it.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsSection() {
+  return (
+    <section className="bg-primary py-24 text-primary-foreground md:py-32">
+      <div className="container-page">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-sand/80">
+            <span className="h-px w-8 bg-sand/50" /> Kundenstimmen
+          </p>
+          <h2 className="mt-4 font-display text-3xl font-semibold leading-tight text-primary-foreground sm:text-4xl md:text-5xl">
+            Was unsere Kunden sagen.
+          </h2>
+        </div>
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {testimonials.map((t) => (
+            <blockquote key={t.name} className="rounded-lg bg-white/[0.06] p-8 ring-1 ring-white/10 backdrop-blur">
+              <div className="flex gap-0.5 text-sand">
+                {Array.from({ length: 5 }).map((_, i) => (<Star key={i} className="h-4 w-4 fill-current" />))}
+              </div>
+              <p className="mt-5 text-base leading-relaxed text-primary-foreground/90">„{t.text}"</p>
+              <footer className="mt-6 text-sm">
+                <div className="font-medium text-primary-foreground">{t.name}</div>
+                <div className="text-primary-foreground/60">{t.place}</div>
+              </footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

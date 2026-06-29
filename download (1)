@@ -1,0 +1,57 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+import heroImg from "@/assets/hero.jpg";
+import { SiteHeader, SiteFooter, PageHero, CTASection } from "@/components/site";
+import { services } from "@/lib/site-data";
+
+export const Route = createFileRoute("/leistungen")({
+  head: () => ({
+    meta: [
+      { title: "Leistungen – Gjini Gartenbau" },
+      { name: "description", content: "Gartenbau, Gartengestaltung, Pflege, Natursteinarbeiten, Terrassen, Wasseranlagen, Zaunbau und Umgebungsarbeiten – alles aus einer Hand." },
+      { property: "og:title", content: "Leistungen – Gjini Gartenbau" },
+      { property: "og:description", content: "Acht Schwerpunkte für Ihren Garten – in Schweizer Qualität." },
+      { property: "og:url", content: "/leistungen" },
+    ],
+    links: [{ rel: "canonical", href: "/leistungen" }],
+  }),
+  component: ServicesPage,
+});
+
+function ServicesPage() {
+  return (
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <PageHero
+        eyebrow="Unsere Leistungen"
+        title="Alles aus einer Hand – mit Sorgfalt und Erfahrung."
+        subtitle="Acht Schwerpunkte, ein Anspruch: hochwertige Gartenarbeiten in Schweizer Qualität – von der Idee bis zur Pflege."
+        image={heroImg}
+      />
+
+      <section className="py-24 md:py-32">
+        <div className="container-page">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((s) => (
+              <article key={s.slug} className="group overflow-hidden rounded-lg border border-transparent bg-card shadow-soft transition hover:border-sage hover:shadow-card">
+                <div className="aspect-[4/5] overflow-hidden">
+                  <img src={s.img} alt={s.title} width={1024} height={1280} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                </div>
+                <div className="border-t-2 border-sage/60 p-6">
+                  <h2 className="font-display text-xl font-semibold">{s.title}</h2>
+                  <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+                  <Link to="/kontakt" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition group-hover:gap-2.5">
+                    Anfrage stellen <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CTASection />
+      <SiteFooter />
+    </div>
+  );
+}

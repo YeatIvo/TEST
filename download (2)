@@ -1,0 +1,76 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import heroImg from "@/assets/hero.jpg";
+import { SiteHeader, SiteFooter, PageHero, CTASection } from "@/components/site";
+import { projects, projectCategories } from "@/lib/site-data";
+
+export const Route = createFileRoute("/referenzen")({
+  head: () => ({
+    meta: [
+      { title: "Referenzen – Gjini Gartenbau" },
+      { name: "description", content: "Eine Auswahl realisierter Projekte: Privatgärten, Terrassen, Natursteinarbeiten, Wasseranlagen und Umgebungsarbeiten in der Region Aargau." },
+      { property: "og:title", content: "Referenzen – Gjini Gartenbau" },
+      { property: "og:description", content: "Ausgewählte Projekte aus über 25 Jahren Gartenbau." },
+      { property: "og:url", content: "/referenzen" },
+    ],
+    links: [{ rel: "canonical", href: "/referenzen" }],
+  }),
+  component: ReferencesPage,
+});
+
+function ReferencesPage() {
+  const [active, setActive] = useState("Alle");
+  const filtered = active === "Alle" ? projects : projects.filter((p) => p.cat === active);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <PageHero
+        eyebrow="Referenzen"
+        title="Eine Auswahl unserer Projekte."
+        subtitle="Jedes Projekt entsteht im engen Austausch mit unseren Kundinnen und Kunden – mit Blick fürs Detail und Liebe zum Handwerk."
+        image={heroImg}
+      />
+
+      <section className="py-20 md:py-28">
+        <div className="container-page">
+          <div className="flex flex-wrap gap-3">
+            {projectCategories.map((c) => {
+              const isActive = active === c;
+              return (
+                <button
+                  key={c}
+                  onClick={() => setActive(c)}
+                  aria-pressed={isActive}
+                  className={`group relative inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold uppercase tracking-[0.12em] transition-all duration-300 ${
+                    isActive
+                      ? "bg-primary text-primary-foreground shadow-card ring-2 ring-primary/30 ring-offset-2 ring-offset-background scale-[1.03]"
+                      : "bg-card text-primary border-2 border-primary/15 hover:border-primary hover:bg-sand hover:-translate-y-0.5 hover:shadow-soft"
+                  }`}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full transition ${isActive ? "bg-primary-foreground" : "bg-sage group-hover:bg-primary"}`} />
+                  {c}
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((p) => (
+              <figure key={p.title} className="group relative overflow-hidden rounded-lg shadow-soft">
+                <img src={p.img} alt={p.title} width={1280} height={960} loading="lazy" className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/10 to-transparent opacity-0 transition group-hover:opacity-100" />
+                <figcaption className="absolute bottom-0 left-0 p-5 text-primary-foreground opacity-0 transition group-hover:opacity-100">
+                  <div className="text-xs uppercase tracking-[0.18em] opacity-80">{p.cat}</div>
+                  <div className="font-display text-xl font-semibold">{p.title}</div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CTASection />
+      <SiteFooter />
+    </div>
+  );
+}
