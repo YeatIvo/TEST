@@ -30,7 +30,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 
-from . import data, notify, risk, settings, signals
+from . import adapt, data, notify, risk, settings, signals
 from .indicators import vol_high
 
 NY = ZoneInfo("America/New_York")
@@ -78,25 +78,28 @@ def expected_positions(st: dict) -> dict[str, int]:
     return exp
 
 
-def _log(name: str, rec: dict):
-    p = settings.DIRS["logs"] / f"{name}.jsonl"
+def _log(name: str, rec: dict, log_dir=None):
+    p = (log_dir or settings.DIRS["logs"]) / f"{name}.jsonl"
     p.parent.mkdir(exist_ok=True)
     with p.open("a") as f:
         f.write(json.dumps(rec, default=str) + "\n")
 
 
 class Lock:
+    def __init__(self, path=None):
+        self.path = path or LOCK_PATH
+
     def __enter__(self):
-        LOCK_PATH.parent.mkdir(exist_ok=True)
-        if LOCK_PATH.exists():
-            age = dt.datetime.now().timestamp() - LOCK_PATH.stat().st_mtime
+        self.path.parent.mkdir(exist_ok=True)
+        if self.path.exists():
+            age = dt.datetime.now().timestamp() - self.path.stat().st_mtime
             if age < 2 * 3600:
                 raise Abort("Ein anderer Lauf ist aktiv (Lock-Datei).")
-        LOCK_PATH.write_text(str(os.getpid()))
+        self.path.write_text(str(os.getpid()))
         return self
 
     def __exit__(self, *a):
-        LOCK_PATH.unlink(missing_ok=True)
+        self.path.unlink(missing_ok=True)
 
 
 # ------------------------------------------------------------------ Signale
@@ -138,9 +141,11 @@ def live_prices(cfg) -> dict:
 # ------------------------------------------------------------------ Bot
 class Bot:
     def __init__(self, broker, prices_fn, state_path=STATE_PATH, dry_run=False, alerts=True, cfg=None,
-                 pause_file=None):
+                 pause_file=None, log_dir=None):
         self.b, self.prices_fn, self.path = broker, prices_fn, state_path
         self.pause_file = pause_file or risk.PAUSE_FILE
+        self.log_dir = log_dir                     # None = echte Logs; Simulation/Tests: eigener Ordner
+        self.lock_path = (log_dir / "bot.lock") if log_dir else None
         self.dry, self.alerts = dry_run, alerts
         self.cfg = cfg or load_config()
         self.s = settings.load()
@@ -157,6 +162,8 @@ class Bot:
                 o = self.b.get_order(sl["stop_cid"])
                 if o and o["status"] == "filled":
                     notes.append(f"Stop gefüllt: {sl['symbol']} {sl['shares']} @ {o['filled_avg_price']:.2f}")
+                    c = settings.cost_per_side(sl["symbol"])
+                    sl.setdefault("closed", []).append(o["filled_avg_price"] / sl["entry_px"] * (1 - c) ** 2 - 1)
                     sl.update(status="flat", shares=0, exit_date=str(pd.Timestamp(today).date()), stop_cid=None)
         if st["pending"]:
             raise Abort(f"Offene, nicht verbuchte Orders vom letzten Lauf ({len(st['pending'])}) – "
@@ -172,7 +179,7 @@ class Bot:
     # ---- Abend
     def evening(self, asof=None) -> dict:
         asof = pd.Timestamp(asof or dt.datetime.now(NY).date())
-        with Lock():
+        with Lock(self.lock_path):
             st = load_state(self.path, self.cfg)
             if not self.b.is_trading_day(asof):
                 return {"status": "kein Handelstag", "asof": asof}
@@ -189,7 +196,7 @@ class Bot:
                 ai_note = self.ai_call(asof)
                 plan = self.plan(st, d)
             except Abort as e:
-                _log("runs", {"asof": asof, "status": "ABORT", "reason": str(e), "dry": self.dry})
+                _log("runs", {"asof": asof, "status": "ABORT", "reason": str(e), "dry": self.dry}, self.log_dir)
                 self.alert(f"⛔ Bot gestoppt ({asof.date()}): {e}")
                 raise
             sent = [] if self.dry else self.send(plan["orders"], plan["cancels"])
@@ -200,7 +207,7 @@ class Bot:
             rec = {"asof": asof, "status": "ok", "dry": self.dry, "core_symbol": d["core_symbol"],
                    "core_on": d["core_on"], "orders": plan["orders"], "cancels": plan["cancels"],
                    "risk": plan["risk"], "notes": notes + [ai_note], "equity": plan["equity"]}
-            _log("runs", rec)
+            _log("runs", rec, self.log_dir)
             self.alert(self.summary(rec))
             return rec
 
@@ -218,6 +225,23 @@ class Bot:
         st["hwm"] = max(st["hwm"] or eq, eq)
         rs = risk.assess(eq, last_eq, st["hwm"], st["borrow_blocked"], self.pause_file, persist=not self.dry)
         st["borrow_blocked"] = rs.borrow_blocked
+        kl = adapt.kill_lines() if (settings.DIRS["rules"] / "kill_lines.json").exists() else None
+        if kl and abs(rs.drawdown) > kl["core"]["alert_line"]:
+            rs.core_alert = True
+            rs.reasons.append(f"Konto-DD {rs.drawdown:.1%} > Core-Alarm {kl['core']['alert_line']:.1%}: "
+                              "keine neuen Sleeves, Core läuft weiter – bitte prüfen")
+        self.cfg = json.loads(json.dumps(self.cfg))
+        for sl_cfg in self.cfg["sleeves"]:
+            sl = st["sleeves"][sl_cfg["id"]]
+            if kl and sl_cfg.get("enabled", True) and sl_cfg["id"] in kl["sleeves"]:
+                dd, _ = adapt.live_drawdown(sl, d["closes"].get(sl_cfg["ticker"]),
+                                            settings.cost_per_side(sl_cfg["ticker"]))
+                if dd > kl["sleeves"][sl_cfg["id"]]["kill_line"]:
+                    sl_cfg["enabled"] = False
+                    why = f"Live-DD {dd:.1%} > Kill-Line {kl['sleeves'][sl_cfg['id']]['kill_line']:.1%}"
+                    rs.reasons.append(f"{sl_cfg['ticker']} {sl_cfg['kind']} abgeschaltet: {why}")
+                    if not self.dry and self.log_dir is None:   # nur echte Läufe ändern rules/
+                        adapt.disable_sleeve(sl_cfg["id"], why)
         orders, cancels, targets = [], [], {}
         tag = lambda sym, side, comp: f"{asof:%Y%m%d}-{sym}-{side}-{comp}"[:48]
 
@@ -298,14 +322,14 @@ class Bot:
             if self.b.get_order(o["cid"]):              # schon vorhanden -> nie doppelt
                 continue
             self.b.submit_moo(o["symbol"], o["qty"], o["side"], o["cid"])
-            _log("orders", {**o, "sent": dt.datetime.now().isoformat(timespec="seconds")})
+            _log("orders", {**o, "sent": dt.datetime.now().isoformat(timespec="seconds")}, self.log_dir)
             sent.append(o["cid"])
         return sent
 
     # ---- Morgen
     def morning(self, today=None) -> dict:
         today = pd.Timestamp(today or dt.datetime.now(NY).date())
-        with Lock():
+        with Lock(self.lock_path):
             st = load_state(self.path, self.cfg)
             notes, keep = [], []
             for p in st["pending"]:
@@ -333,6 +357,9 @@ class Bot:
                         sl.update(status="in_trade", shares=q, entry_px=px, entry_date=str(today.date()),
                                   hold_days=0, stop_cid=None)
                     else:
+                        c = settings.cost_per_side(p["symbol"])
+                        if sl.get("entry_px"):
+                            sl.setdefault("closed", []).append(px / sl["entry_px"] * (1 - c) ** 2 - 1)
                         sl.update(status="flat", shares=0, exit_date=str(today.date()), stop_cid=None)
                     notes.append(f"Sleeve {p['side']} {q} {p['symbol']} @ {px:.2f}")
             st["pending"] = keep
@@ -356,7 +383,7 @@ class Bot:
             if not self.dry:
                 save_state(st, self.path)
             rec = {"date": today, "notes": notes, "pending_left": len(keep)}
-            _log("morning", rec)
+            _log("morning", rec, self.log_dir)
             if notes:
                 self.alert("☀️ Morgen-Check " + str(today.date()) + "\n" + "\n".join(notes))
             return rec
@@ -433,8 +460,11 @@ def main(argv=None):
         broker = SimBroker(prices, cash=cfg["starting_cash"])
         asof = pd.Timestamp(a.asof) if a.asof else prices["SPY"].index[-1]
         broker.date = asof
-        bot = Bot(broker, lambda d: prices, state_path=settings.DIRS["live"] / "state_sim.json",
-                  dry_run=True, alerts=False, cfg=cfg)
+        import tempfile
+        from pathlib import Path
+        wd = Path(tempfile.mkdtemp())
+        bot = Bot(broker, lambda d: prices, state_path=wd / "state.json", dry_run=True, alerts=False, cfg=cfg,
+                  pause_file=wd / "PAUSE", log_dir=wd)
         print(bot.summary(bot.evening(asof)))
         return
     broker = AlpacaBroker()

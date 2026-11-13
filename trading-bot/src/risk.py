@@ -35,10 +35,11 @@ class RiskState:
     day_change: float
     drawdown: float
     reasons: list
+    core_alert: bool = False
 
     @property
     def allow_new_sleeves(self) -> bool:
-        return not (self.paused or self.day_block or self.bad_day)
+        return not (self.paused or self.day_block or self.bad_day or self.core_alert)
 
 
 def assess(equity: float, last_equity: float, hwm: float, borrow_blocked_before: bool,

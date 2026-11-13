@@ -21,7 +21,7 @@ def env(tmp_path, monkeypatch):
     cal = prices["SPY"].index
     br = brokermod.SimBroker(prices, cash=cfg["starting_cash"], date=cal[-30])
     b = botmod.Bot(br, lambda d: prices, state_path=tmp_path / "state.json", alerts=False, cfg=cfg,
-                   pause_file=tmp_path / "PAUSE")
+                   pause_file=tmp_path / "PAUSE", log_dir=tmp_path)
     return b, br, prices, cal, tmp_path
 
 

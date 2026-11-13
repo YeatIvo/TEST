@@ -90,3 +90,32 @@ Die Logs liegen in `logs/scheduler.log`, `logs/runs.jsonl` und `logs/orders.json
 - Für dieses Projekt ist **nur Paper** erlaubt. Der Code verweigert jedes Live-Konto.
 - Nach einem Tag mit mehr als 5 % Verlust pausiert der Bot von selbst neue Sleeves, bis du `resume` sagst.
 - Eine Regel wird **nie** wegen einer schlechten Woche geändert (siehe `CLAUDE.md`).
+
+## 8 · Wöchentliche Routine (etwa 10 Minuten am Samstag)
+Automatisch: Richte in der Claude-Desktop-App eine **geplante Aufgabe** ein, jeden Samstag um 10:00, Ordner `trading-bot`,
+Text: „Führe den Skill trading-review aus“. Der Skill liegt in `.claude/skills/trading-review/`.
+Ohne Claude geht es auch so:
+```bash
+python -m src.compare --alpaca
+```
+```bash
+python -m src.review
+```
+
+Was der Review macht:
+- **Jeden Samstag:** Wochenbericht in `reports/<datum>-review.md`. Die ersten Zeilen kommen per Telegram.
+- **Erster Samstag im Monat:** Status jedes Sleeves (keep / watch / review / out).
+- **Erster Samstag nach Quartalsende:** Re-Pick-Vorschlag. Es wird **nichts** geändert, bis du JA sagst.
+  Dann führst du den angezeigten Befehl aus, zum Beispiel:
+  ```bash
+  python -m src.adapt rotate <live-id> <bank-id> --apply
+  ```
+
+Was du selbst tust:
+1. Den Bericht lesen, vor allem Fehler und verpasste Läufe.
+2. Die Alerts auf dem Handy anschauen. Ein verpasster Lauf bedeutet meist, dass der Computer geschlafen hat.
+3. Prüfen, wie weit jeder Sleeve von seiner Kill-Line entfernt ist.
+4. Bei Quartalsvorschlägen JA oder NEIN sagen.
+
+Erst nach mehreren Wochen bis Monaten, in denen Paper und Backtest übereinstimmen, über echtes Geld nachdenken.
+Diesen Schritt automatisiert dieses Projekt bewusst **nicht**.

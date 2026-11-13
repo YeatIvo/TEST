@@ -11,3 +11,4 @@ Was, Warum und dem zugehörigen Test eingetragen.
 | 2026-11-13 | Bank: 5 Sleeves (QQQ dip/breakout, XLK dip, XLF breakout, XLY dip) | Funnel 44 → 5 | `src/sleeves.py`, `results/sleeve_funnel.json` |
 | 2026-11-13 | Konto: Core + QQQ breakout + XLK dip, halbe Grösse an volatilen Tagen (`rules/config.json`) | Greedy-Auswahl Rendite/DD im Training | `src/account.py`, `results/account.json` |
 | 2026-11-13 | Phase H: Bot (Alpaca Paper), Risiko-Limits, Scheduler, Telegram, Simulator | Bot handelt rules/config.json | `tests/test_bot.py` (Bot = Backtest ±0.14 %/Tag) |
+| 2026-11-13 | Phase Adapt: Kill-Lines (`rules/kill_lines.json`), Entfernungsregeln, Bank/Rotation, Paper-vs-Backtest, Reviews | Strategien altern | `tests/test_adapt.py` |

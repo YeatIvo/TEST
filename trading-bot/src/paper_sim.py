@@ -41,7 +41,7 @@ def _run(days, end, workdir) -> dict:
     wd = Path(workdir or tempfile.mkdtemp())
     broker = SimBroker(prices, cash=cfg["starting_cash"], date=span[0])
     bot = Bot(broker, lambda d: prices, state_path=wd / "state.json", alerts=False, cfg=cfg,
-              pause_file=wd / "PAUSE")
+              pause_file=wd / "PAUSE", log_dir=wd)
     eq, runs, mornings = {}, [], []
     for i, d in enumerate(span):
         if i > 0:
