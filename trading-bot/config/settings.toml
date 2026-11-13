@@ -1,0 +1,68 @@
+# ============================================================
+#  MY SETTINGS  –  die einzige Stelle, die du für deinen Markt änderst.
+#  Jeder spätere Schritt (Studie, Backtest, Bot) liest NUR von hier.
+#  Nach einer Änderung: `python -m src.fingerprint` neu ausführen.
+# ============================================================
+
+[data]
+bar_size      = "1d"          # 1d = Tagesbalken (gratis via Yahoo). Intraday: "1h", "5m", "1m" (+ eigene Daten nötig)
+source        = "yfinance"    # oder "files" -> CSVs in data/research/ ablegen (Spalten: date,open,high,low,close,volume)
+adjusted      = true          # Splits/Dividenden bereinigt
+history_start = "2020-01-01"  # Vorlauf, damit der 200-Tage-Schnitt ab 2022 gültig ist
+
+[windows]
+train_start = "2022-01-01"    # Training: hier wird ALLES gewählt/getunt
+train_end   = "2024-12-31"
+lock_start  = "2025-01-01"    # Lock-Test: bis zum Schluss gesperrt, genau EIN Lauf
+lock_end    = "today"
+
+[portfolio]
+starting_cash     = 100000.0
+currency          = "USD"
+core_weight       = 1.00      # Core ist immer zu 100 % investiert
+sleeve_weight     = 0.20      # jede Sleeve-Slot-Grösse (Anteil am Konto)
+max_sleeves       = 3
+max_gross         = 1.60      # Core 100 % + max. 3 x 20 % Sleeves (Margin)
+margin_rate_year  = 0.065     # Zins auf geliehenes Geld (Alpaca-Annahme)
+whole_shares_live = true      # Live/Paper: nur ganze Aktien (Market-on-Open)
+
+[costs]
+per_side_etf    = 0.0005      # 0.05 % pro Kauf UND pro Verkauf
+per_side_crypto = 0.0025      # 0.25 % (Alpaca Krypto-Taker)
+stress_multiplier = 2.0       # Kosten-Stresstest: doppelte Kosten
+
+[universe]
+# 22 handelbare ETFs + Cash-Proxy + Bitcoin = 24 Studien-Ticker
+study_tickers = [
+  "SPY", "QQQ", "IWM", "DIA",
+  "XLK", "XLF", "XLY", "XLE", "XLV", "XLI", "XLP", "XLU", "XLB", "XLRE", "XLC",
+  "SHY", "IEF", "TLT",
+  "GLD", "SLV", "EFA", "EEM",
+  "BIL",       # Cash-Proxy (T-Bills 1–3 Monate)
+  "BTC-USD",
+]
+cash_proxy        = "BIL"
+crypto_tickers    = ["BTC-USD"]
+not_tradable      = ["BIL", "BTC-USD"]       # nur Studie, keine Sleeves
+engine_candidates = ["SPY", "QQQ", "IWM", "DIA"]
+safe_candidates   = ["BIL", "SHY", "IEF", "TLT", "GLD"]
+breadth_universe  = "SP500"                   # erst für optionalen Filter (5B)
+
+[regime]
+trend_ma_days     = 200       # Kurs über/unter 200-Tage-Schnitt = Uptrend/Downtrend
+vol_window_days   = 20        # realisierte Volatilität
+vol_lookback_days = 252       # "volatil" = Vola über dem 1-Jahres-Median
+
+[risk]
+dip_stop_pct          = 0.08  # Stop beim Broker, 8 % unter Einstand
+breakout_stop_pct     = 0.10  # 10 % unter Einstand
+daily_loss_block_pct  = 0.03  # >3 % Tagesverlust -> keine neuen Sleeve-Trades (löst sich am Folgetag)
+bad_day_pause_pct     = 0.05  # >5 % Tagesverlust -> PAUSE-Datei, bis du "resume" sagst
+order_tolerance       = 1.05  # keine Order > 105 % ihres Ziels
+
+[broker]
+name        = "alpaca"
+paper_only  = true            # Live-Konto ist für dieses Projekt GESPERRT
+timezone    = "America/New_York"
+evening_run_after = "19:05"   # Alpaca nimmt MOO-Orders erst nach 19:00 NY an
+evening_run_before = "23:59"
