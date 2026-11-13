@@ -57,10 +57,11 @@ class AlpacaBroker:
         if not url.startswith("https://paper-api.alpaca.markets"):
             raise BrokerSafetyError(f"Client zeigt nicht auf die Paper-API ({url}).")
 
-    def is_trading_day(self, d: dt.date) -> bool:
+    def is_trading_day(self, d) -> bool:
         from alpaca.trading.requests import GetCalendarRequest
+        d = pd.Timestamp(d).date()          # Alpaca liefert datetime.date; Timestamp != date
         cal = self.c.get_calendar(GetCalendarRequest(start=d, end=d))
-        return any(x.date == d for x in cal)
+        return any(pd.Timestamp(x.date).date() == d for x in cal)
 
     def account(self):
         return self.c.get_account()

@@ -135,3 +135,20 @@ def test_alpaca_paper_guard_accepts_paper_client(monkeypatch):
     monkeypatch.setenv("ALPACA_SECRET_KEY", "dummy")
     b = brokermod.AlpacaBroker()                      # darf NICHT abbrechen
     assert b.c._base_url.value.startswith("https://paper-api")
+
+
+def test_alpaca_trading_day_accepts_timestamp_and_date(monkeypatch):
+    """Regression: pd.Timestamp == datetime.date ist False -> Bot hielt jeden Tag für feiertags."""
+    import datetime as dt
+    from types import SimpleNamespace
+    b = brokermod.AlpacaBroker.__new__(brokermod.AlpacaBroker)
+    seen = {}
+
+    def get_calendar(req):
+        seen["start"] = req.start
+        return [SimpleNamespace(date=dt.date(2026, 11, 13))] if req.start == dt.date(2026, 11, 13) else []
+    b.c = SimpleNamespace(get_calendar=get_calendar)
+    assert b.is_trading_day(pd.Timestamp("2026-11-13"))
+    assert b.is_trading_day(dt.date(2026, 11, 13))
+    assert not b.is_trading_day(pd.Timestamp("2026-11-14"))
+    assert isinstance(seen["start"], dt.date)
