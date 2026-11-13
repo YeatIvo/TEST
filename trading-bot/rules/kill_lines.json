@@ -1,0 +1,43 @@
+{
+  "core": {
+    "worst_dd": 0.28405878963521547,
+    "alert_line": 0.4260881844528232
+  },
+  "sleeves": {
+    "sleeve:QQQ:brk_hi50_lo20": {
+      "worst_dd": 0.1519382709939786,
+      "trades_per_year": 2.4766584766584767,
+      "win_rate": 0.5,
+      "avg_trade": 0.039848993046440455,
+      "kill_line": 0.3038765419879572
+    },
+    "sleeve:XLK:dip_rsi10_sma5": {
+      "worst_dd": 0.10206397825352143,
+      "trades_per_year": 8.04914004914005,
+      "win_rate": 0.6923076923076923,
+      "avg_trade": 0.0038016707238254033,
+      "kill_line": 0.20412795650704285
+    },
+    "sleeve:QQQ:dip_rsi10_sma5": {
+      "worst_dd": 0.09204288732050314,
+      "trades_per_year": 9.081081081081082,
+      "win_rate": 0.7272727272727273,
+      "avg_trade": 0.003461090737679145,
+      "kill_line": 0.18408577464100628
+    },
+    "sleeve:XLF:brk_hi50_lo20": {
+      "worst_dd": 0.15592495283401187,
+      "trades_per_year": 3.095823095823096,
+      "win_rate": 0.4,
+      "avg_trade": 0.009612329549408256,
+      "kill_line": 0.31184990566802373
+    },
+    "sleeve:XLY:dip_rsi10_sma5": {
+      "worst_dd": 0.09904587808623366,
+      "trades_per_year": 7.636363636363637,
+      "win_rate": 0.7567567567567568,
+      "avg_trade": 0.006733666548206888,
+      "kill_line": 0.19809175617246733
+    }
+  }
+}

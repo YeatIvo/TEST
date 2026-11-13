@@ -1,0 +1,43 @@
+{
+  "starting_cash": 100000.0,
+  "core": {
+    "engine": "QQQ",
+    "safe": "GLD",
+    "kind": "sma",
+    "n": 200,
+    "weight": 1.0
+  },
+  "sleeves": [
+    {
+      "id": "sleeve:QQQ:brk_hi50_lo20",
+      "ticker": "QQQ",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "weight": 0.2,
+      "enabled": true
+    },
+    {
+      "id": "sleeve:XLK:dip_rsi10_sma5",
+      "ticker": "XLK",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "weight": 0.2,
+      "enabled": true
+    }
+  ],
+  "vol_sizing_half": true,
+  "margin": {
+    "allowed": true,
+    "max_gross": 1.6
+  }
+}
