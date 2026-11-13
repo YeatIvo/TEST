@@ -125,3 +125,13 @@ def test_env_values_never_printed(capsys):
     botmod.main(["check-keys"])
     out = capsys.readouterr().out
     assert all(w in ("gesetzt", "FEHLT") for w in (ln.split()[-1] for ln in out.strip().splitlines()))
+
+
+def test_alpaca_paper_guard_accepts_paper_client(monkeypatch):
+    monkeypatch.setattr(brokermod, "_env_flags", lambda: {"ALPACA_API_KEY": True, "ALPACA_SECRET_KEY": True,
+                                                           "ALPACA_PAPER": True})
+    monkeypatch.setenv("ALPACA_PAPER", "true")
+    monkeypatch.setenv("ALPACA_API_KEY", "dummy")
+    monkeypatch.setenv("ALPACA_SECRET_KEY", "dummy")
+    b = brokermod.AlpacaBroker()                      # darf NICHT abbrechen
+    assert b.c._base_url.value.startswith("https://paper-api")

@@ -52,8 +52,10 @@ class AlpacaBroker:
             raise BrokerSafetyError("Alpaca-Keys fehlen in .env (Werte selbst eintragen).")
         from alpaca.trading.client import TradingClient
         self.c = TradingClient(os.environ["ALPACA_API_KEY"], os.environ["ALPACA_SECRET_KEY"], paper=True)
-        if "paper" not in str(getattr(self.c, "_base_url", "paper")):
-            raise BrokerSafetyError("Client zeigt nicht auf die Paper-API.")
+        url = getattr(self.c, "_base_url", None)
+        url = str(getattr(url, "value", url) or "")
+        if not url.startswith("https://paper-api.alpaca.markets"):
+            raise BrokerSafetyError(f"Client zeigt nicht auf die Paper-API ({url}).")
 
     def is_trading_day(self, d: dt.date) -> bool:
         from alpaca.trading.requests import GetCalendarRequest
