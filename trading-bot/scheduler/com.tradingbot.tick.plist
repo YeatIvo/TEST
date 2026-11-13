@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- macOS: PFAD durch den Ordner ersetzen, in dem trading-bot liegt, dann:
+     cp com.tradingbot.tick.plist ~/Library/LaunchAgents/
+     launchctl load ~/Library/LaunchAgents/com.tradingbot.tick.plist -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.tradingbot.tick</string>
+  <key>WorkingDirectory</key><string>PFAD/trading-bot</string>
+  <key>ProgramArguments</key><array>
+    <string>PFAD/trading-bot/.venv/bin/python</string><string>-m</string><string>src.tick</string>
+  </array>
+  <key>StartInterval</key><integer>1800</integer>
+  <key>RunAtLoad</key><true/>
+  <key>StandardOutPath</key><string>PFAD/trading-bot/logs/launchd.out.log</string>
+  <key>StandardErrorPath</key><string>PFAD/trading-bot/logs/launchd.err.log</string>
+</dict></plist>

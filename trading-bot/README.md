@@ -7,7 +7,7 @@ Eigenständiges Python-Projekt neben der Website im Hauptordner.
 | **A** Architecture | Ordner, Hausregeln, Settings, `.env.example`, Python-Umgebung | ✅ |
 | **L** Logic | Daten, Asset-Studie, Regime, exakte Regeln | ✅ |
 | **P** Proof | Backtester + Selbsttest, Core, Sleeves, Konto, Re-Pick | ✅ |
-| **H** Harness | Alpaca-Paper-Bot, Risiko-Limits, Scheduler, Telegram | ⏳ |
+| **H** Harness | Alpaca-Paper-Bot, Risiko-Limits, Scheduler, Telegram (Einrichtung: `SETUP.md`) | ✅ |
 | **A** Adapt | Paper vs. Backtest, Kill-Lines, Bench/Rotation, Reviews | ⏳ |
 
 ## Ordner

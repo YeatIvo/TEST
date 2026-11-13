@@ -1,0 +1,2 @@
+# Linux: `crontab -e` und diese Zeile einfügen (PFAD anpassen)
+*/30 * * * * cd PFAD/trading-bot && .venv/bin/python -m src.tick >> logs/cron.log 2>&1
