@@ -1,0 +1,1137 @@
+{
+  "funnel": {
+    "ideas": 44,
+    "fits": 22,
+    "profit": 16,
+    "trades": 14,
+    "pf": 10,
+    "neighbors": 8,
+    "lock": 5
+  },
+  "ideas": [
+    {
+      "ticker": "SPY",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:SPY:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 0.0,
+        "trades": 0.0,
+        "pf": 0.0
+      },
+      "train": {
+        "total": -0.006382763827181948,
+        "cagr": -0.0021406161391416267,
+        "maxdd": -0.1219991639696999,
+        "ret_dd": -0.01754615416605049,
+        "sharpe": -0.016030744060629983,
+        "trades": 25,
+        "win_rate": 0.6,
+        "avg_trade": -4.435321095869416e-05,
+        "profit_factor": 0.9931777162733172
+      },
+      "passed": false
+    },
+    {
+      "ticker": "SPY",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:SPY:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "QQQ",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:QQQ:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": true
+      },
+      "train": {
+        "total": 0.13582776372408234,
+        "cagr": 0.043544442519056314,
+        "maxdd": -0.09204288732050314,
+        "ret_dd": 0.4730886197369051,
+        "sharpe": 0.7005505113276331,
+        "trades": 23,
+        "win_rate": 0.8260869565217391,
+        "avg_trade": 0.005810984296559043,
+        "profit_factor": 2.0900371033066385
+      },
+      "neighbors": {
+        "dip_rsi5_sma5": 0.10711571898073413,
+        "dip_rsi15_sma5": 0.1652517890334677,
+        "dip_rsi10_sma3": 0.05710700669631352,
+        "dip_rsi10_sma10": 0.17972287011524823
+      },
+      "lock": {
+        "total": 0.014571611173081367,
+        "cagr": 0.007820053378791103,
+        "maxdd": -0.08872754435346586,
+        "ret_dd": 0.08813557769206579,
+        "sharpe": 0.1268560035750884,
+        "trades": 21,
+        "win_rate": 0.6190476190476191,
+        "avg_trade": 0.0008873977922392571,
+        "profit_factor": 1.1450633299962039
+      },
+      "passed": true
+    },
+    {
+      "ticker": "QQQ",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:QQQ:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": true
+      },
+      "train": {
+        "total": 0.25495690282795436,
+        "cagr": 0.0789647383430565,
+        "maxdd": -0.1519382709939786,
+        "ret_dd": 0.5197159203304736,
+        "sharpe": 0.7391489245116429,
+        "trades": 6,
+        "win_rate": 0.5,
+        "avg_trade": 0.04624611814216273,
+        "profit_factor": 4.664505303983739
+      },
+      "neighbors": {
+        "brk_hi20_lo20": 0.22913634867829358,
+        "brk_hi100_lo20": 0.2112364051833333
+      },
+      "lock": {
+        "total": 0.1501595820589665,
+        "cagr": 0.07824114703936624,
+        "maxdd": -0.11051310064032949,
+        "ret_dd": 0.7079807424280496,
+        "sharpe": 0.7599962816558141,
+        "trades": 5,
+        "win_rate": 0.4,
+        "avg_trade": 0.03153033742205611,
+        "profit_factor": 2.1941602649083283
+      },
+      "passed": true
+    },
+    {
+      "ticker": "IWM",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:IWM:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": false
+      },
+      "train": {
+        "total": 0.004986465083838487,
+        "cagr": 0.0016660165558808337,
+        "maxdd": -0.06263477496732672,
+        "ret_dd": 0.026598907024890043,
+        "sharpe": 0.05782396912552475,
+        "trades": 16,
+        "win_rate": 0.625,
+        "avg_trade": 0.0006131005103018131,
+        "profit_factor": 1.0732145284883379
+      },
+      "passed": false
+    },
+    {
+      "ticker": "IWM",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:IWM:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "DIA",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:DIA:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": false
+      },
+      "train": {
+        "total": 0.10413918188036608,
+        "cagr": 0.03370926887668513,
+        "maxdd": -0.06256133292671773,
+        "ret_dd": 0.5388195439533081,
+        "sharpe": 0.664042769298269,
+        "trades": 29,
+        "win_rate": 0.6551724137931034,
+        "avg_trade": 0.0035425197948505596,
+        "profit_factor": 1.8087437111079372
+      },
+      "neighbors": {
+        "dip_rsi5_sma5": -0.022815874483071763,
+        "dip_rsi15_sma5": 0.06633559166383574,
+        "dip_rsi10_sma3": -0.009092160578150987,
+        "dip_rsi10_sma10": 0.11406656773241508
+      },
+      "passed": false
+    },
+    {
+      "ticker": "DIA",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:DIA:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLK",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLK:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": true
+      },
+      "train": {
+        "total": 0.11304106093773414,
+        "cagr": 0.036490907241897075,
+        "maxdd": -0.09481436216873329,
+        "ret_dd": 0.3848668746719745,
+        "sharpe": 0.5451853097111651,
+        "trades": 20,
+        "win_rate": 0.65,
+        "avg_trade": 0.005693867121264684,
+        "profit_factor": 1.8925506481079934
+      },
+      "neighbors": {
+        "dip_rsi5_sma5": 0.05862276029164004,
+        "dip_rsi15_sma5": 0.26880429974941866,
+        "dip_rsi10_sma3": 0.02929675543593735,
+        "dip_rsi10_sma10": 0.060029608969771386
+      },
+      "lock": {
+        "total": 0.02512522788341376,
+        "cagr": 0.013451471731928955,
+        "maxdd": -0.10206397825352176,
+        "ret_dd": 0.13179450734828482,
+        "sharpe": 0.17080234598550822,
+        "trades": 19,
+        "win_rate": 0.7368421052631579,
+        "avg_trade": 0.001809885042310371,
+        "profit_factor": 1.1812421770095722
+      },
+      "passed": true
+    },
+    {
+      "ticker": "XLK",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLK:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": false
+      },
+      "train": {
+        "total": 0.1683668230345825,
+        "cagr": 0.05345539607829175,
+        "maxdd": -0.11380474431553711,
+        "ret_dd": 0.4697114904988525,
+        "sharpe": 0.4957891667804507,
+        "trades": 8,
+        "win_rate": 0.625,
+        "avg_trade": 0.031203657875589805,
+        "profit_factor": 9.210113369684846
+      },
+      "neighbors": {
+        "brk_hi20_lo20": -0.0004001902059915796,
+        "brk_hi100_lo20": 0.12360023180284374
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLF",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLF:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLF",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLF:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": true
+      },
+      "train": {
+        "total": 0.0691149033673859,
+        "cagr": 0.02261778026079475,
+        "maxdd": -0.15592495283401187,
+        "ret_dd": 0.14505555300614553,
+        "sharpe": 0.2873523932847964,
+        "trades": 9,
+        "win_rate": 0.3333333333333333,
+        "avg_trade": 0.010227480639776224,
+        "profit_factor": 1.4319775699007589
+      },
+      "neighbors": {
+        "brk_hi20_lo20": 0.14299875478328605,
+        "brk_hi100_lo20": 0.05596475218611752
+      },
+      "lock": {
+        "total": 0.019951604244197174,
+        "cagr": 0.01069418259684718,
+        "maxdd": -0.06555353186457247,
+        "ret_dd": 0.16313663494043878,
+        "sharpe": 0.16690903921431408,
+        "trades": 6,
+        "win_rate": 0.5,
+        "avg_trade": 0.008689602913856306,
+        "profit_factor": 3.0647942317728827
+      },
+      "passed": true
+    },
+    {
+      "ticker": "XLY",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLY:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": true
+      },
+      "train": {
+        "total": 0.07168099469717593,
+        "cagr": 0.023438547815633815,
+        "maxdd": -0.09904587808623366,
+        "ret_dd": 0.23664334416044241,
+        "sharpe": 0.4414809898325457,
+        "trades": 20,
+        "win_rate": 0.7,
+        "avg_trade": 0.003803242697952214,
+        "profit_factor": 1.5523927104484656
+      },
+      "neighbors": {
+        "dip_rsi5_sma5": 0.004004718773584104,
+        "dip_rsi15_sma5": 0.03013336804344613,
+        "dip_rsi10_sma3": 0.058309294694415925,
+        "dip_rsi10_sma10": 0.06377792081549671
+      },
+      "lock": {
+        "total": 0.18523699460069265,
+        "cagr": 0.0958251428843353,
+        "maxdd": -0.05558319144942747,
+        "ret_dd": 1.7239949773578958,
+        "sharpe": 1.287641004903317,
+        "trades": 17,
+        "win_rate": 0.8235294117647058,
+        "avg_trade": 0.01018122401909474,
+        "profit_factor": 4.2372512510263265
+      },
+      "passed": true
+    },
+    {
+      "ticker": "XLY",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLY:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": false
+      },
+      "train": {
+        "total": 0.2415239895756256,
+        "cagr": 0.07508585115393673,
+        "maxdd": -0.08130643614640531,
+        "ret_dd": 0.9234920962312575,
+        "sharpe": 0.7649879904491688,
+        "trades": 6,
+        "win_rate": 0.6666666666666666,
+        "avg_trade": 0.017414069263737397,
+        "profit_factor": 4.183892562467377
+      },
+      "neighbors": {
+        "brk_hi20_lo20": 0.10503509752192208,
+        "brk_hi100_lo20": 0.14791188002958133
+      },
+      "lock": {
+        "total": -0.08420118410234678,
+        "cagr": -0.04625821315546552,
+        "maxdd": -0.1717330378103049,
+        "ret_dd": -0.269361176773464,
+        "sharpe": -0.37971055583706687,
+        "trades": 6,
+        "win_rate": 0.3333333333333333,
+        "avg_trade": -0.015581070930463051,
+        "profit_factor": 0.3685333714111992
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLE",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLE:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 0.0,
+        "trades": 0.0,
+        "pf": 0.0
+      },
+      "train": {
+        "total": -0.010366264833870598,
+        "cagr": -0.00348122118298988,
+        "maxdd": -0.1682585769477084,
+        "ret_dd": -0.020689710124386574,
+        "sharpe": 0.023993453131514738,
+        "trades": 30,
+        "win_rate": 0.6,
+        "avg_trade": 0.0004295201735189491,
+        "profit_factor": 1.0312482328897823
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLE",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLE:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLV",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLV:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": false
+      },
+      "train": {
+        "total": 0.01782247081709709,
+        "cagr": 0.005929474581001015,
+        "maxdd": -0.0514806994172432,
+        "ret_dd": 0.11517859407743336,
+        "sharpe": 0.1590002705776561,
+        "trades": 24,
+        "win_rate": 0.625,
+        "avg_trade": 0.0007750039222729302,
+        "profit_factor": 1.2506347176901667
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLV",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLV:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 0.0,
+        "trades": 0.0,
+        "pf": 0.0
+      },
+      "train": {
+        "total": -0.007236632993898207,
+        "cagr": -0.0024276752419731817,
+        "maxdd": -0.10411277060086754,
+        "ret_dd": -0.023317746977266136,
+        "sharpe": 0.006177035572435536,
+        "trades": 9,
+        "win_rate": 0.4444444444444444,
+        "avg_trade": 0.005653634744161868,
+        "profit_factor": 1.5119152725022253
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLI",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLI:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": false
+      },
+      "train": {
+        "total": 0.021689242220903182,
+        "cagr": 0.007206799825284049,
+        "maxdd": -0.06224985612288836,
+        "ret_dd": 0.11577215232525195,
+        "sharpe": 0.1498227004962052,
+        "trades": 22,
+        "win_rate": 0.6363636363636364,
+        "avg_trade": 0.0013450899084535965,
+        "profit_factor": 1.2068414797687386
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLI",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLI:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLP",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLP:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLP",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLP:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLU",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLU:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLU",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLU:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLB",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLB:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLB",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLB:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLRE",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLRE:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLRE",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLRE:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLC",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:XLC:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": false
+      },
+      "train": {
+        "total": 0.21684351200299923,
+        "cagr": 0.06788569889951446,
+        "maxdd": -0.04150280009278984,
+        "ret_dd": 1.6356896100441196,
+        "sharpe": 1.055945288553018,
+        "trades": 20,
+        "win_rate": 0.75,
+        "avg_trade": 0.010199762159442677,
+        "profit_factor": 9.52279959354475
+      },
+      "neighbors": {
+        "dip_rsi5_sma5": 0.12062396640122763,
+        "dip_rsi15_sma5": 0.22273171803676983,
+        "dip_rsi10_sma3": 0.09341318710675983,
+        "dip_rsi10_sma10": 0.24406020955377472
+      },
+      "lock": {
+        "total": -0.004859389634832567,
+        "cagr": -0.00261953562883277,
+        "maxdd": -0.052380031535586125,
+        "ret_dd": -0.050010195718440925,
+        "sharpe": -0.014701072385163529,
+        "trades": 18,
+        "win_rate": 0.6111111111111112,
+        "avg_trade": -0.001010409992266845,
+        "profit_factor": 0.8371522222360164
+      },
+      "passed": false
+    },
+    {
+      "ticker": "XLC",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:XLC:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": true,
+        "neighbors": true,
+        "lock": false
+      },
+      "train": {
+        "total": 0.22294500055944133,
+        "cagr": 0.06967469082584166,
+        "maxdd": -0.1490446345772969,
+        "ret_dd": 0.4674753373272707,
+        "sharpe": 0.6474929477352188,
+        "trades": 8,
+        "win_rate": 0.5,
+        "avg_trade": 0.02784058652803123,
+        "profit_factor": 2.8911637208467447
+      },
+      "neighbors": {
+        "brk_hi20_lo20": 0.2857006954809156,
+        "brk_hi100_lo20": 0.1494399917152447
+      },
+      "lock": {
+        "total": -0.033989050988747826,
+        "cagr": -0.018447777127292286,
+        "maxdd": -0.17554510527588818,
+        "ret_dd": -0.1050885303711522,
+        "sharpe": -0.19428037302363357,
+        "trades": 7,
+        "win_rate": 0.14285714285714285,
+        "avg_trade": -0.003097422171775634,
+        "profit_factor": 0.8690282532372797
+      },
+      "passed": false
+    },
+    {
+      "ticker": "SHY",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:SHY:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 0.0,
+        "trades": 0.0,
+        "pf": 0.0
+      },
+      "train": {
+        "total": -0.005703344656010967,
+        "cagr": -0.0019123219661628665,
+        "maxdd": -0.007732456390368014,
+        "ret_dd": -0.24731105739502948,
+        "sharpe": -0.4717037527365061,
+        "trades": 13,
+        "win_rate": 0.3076923076923077,
+        "avg_trade": -0.0004388620328448137,
+        "profit_factor": 0.3949429485041689
+      },
+      "passed": false
+    },
+    {
+      "ticker": "SHY",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:SHY:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": false,
+        "pf": false
+      },
+      "train": {
+        "total": 0.0457160117051163,
+        "cagr": 0.015072435322779132,
+        "maxdd": -0.017136997217888306,
+        "ret_dd": 0.8795260412977077,
+        "sharpe": 1.0509983738333355,
+        "trades": 5,
+        "win_rate": 0.6,
+        "avg_trade": 0.009070627530608565,
+        "profit_factor": 6.385122224866524
+      },
+      "passed": false
+    },
+    {
+      "ticker": "IEF",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:IEF:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": false,
+        "pf": false
+      },
+      "train": {
+        "total": 0.0015452862932212597,
+        "cagr": 0.0005168819821896875,
+        "maxdd": -0.025802169011788112,
+        "ret_dd": 0.020032501219317732,
+        "sharpe": 0.04007026081321165,
+        "trades": 14,
+        "win_rate": 0.5714285714285714,
+        "avg_trade": 0.00012588416669000773,
+        "profit_factor": 1.0643664930656547
+      },
+      "passed": false
+    },
+    {
+      "ticker": "IEF",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:IEF:brk_hi50_lo20",
+      "gates": {
+        "fits": true,
+        "profit": 0.0,
+        "trades": 0.0,
+        "pf": 0.0
+      },
+      "train": {
+        "total": -0.03795175560983233,
+        "cagr": -0.012864806934235529,
+        "maxdd": -0.08652757289110036,
+        "ret_dd": -0.14867869864357094,
+        "sharpe": -0.35387813172833216,
+        "trades": 8,
+        "win_rate": 0.25,
+        "avg_trade": -0.004646136713230983,
+        "profit_factor": 0.5397631656282895
+      },
+      "passed": false
+    },
+    {
+      "ticker": "TLT",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:TLT:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "TLT",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:TLT:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "GLD",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:GLD:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 1.0,
+        "trades": true,
+        "pf": false
+      },
+      "train": {
+        "total": 0.020157548579461837,
+        "cagr": 0.006701215006584604,
+        "maxdd": -0.07846936832445328,
+        "ret_dd": 0.08539912006015621,
+        "sharpe": 0.18148369461392053,
+        "trades": 21,
+        "win_rate": 0.6190476190476191,
+        "avg_trade": 0.0010352951415278657,
+        "profit_factor": 1.2157286844851243
+      },
+      "passed": false
+    },
+    {
+      "ticker": "GLD",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:GLD:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "SLV",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:SLV:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "SLV",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:SLV:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "EFA",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:EFA:dip_rsi10_sma5",
+      "gates": {
+        "fits": true,
+        "profit": 0.0,
+        "trades": 0.0,
+        "pf": 0.0
+      },
+      "train": {
+        "total": -0.047661322060607136,
+        "cagr": -0.016210214883032315,
+        "maxdd": -0.09625609204683572,
+        "ret_dd": -0.16840715780508567,
+        "sharpe": -0.28685830962432524,
+        "trades": 23,
+        "win_rate": 0.4782608695652174,
+        "avg_trade": -0.0019939883224339293,
+        "profit_factor": 0.7217737195222975
+      },
+      "passed": false
+    },
+    {
+      "ticker": "EFA",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:EFA:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "EEM",
+      "kind": "dip",
+      "rule": {
+        "kind": "dip",
+        "a": 10,
+        "b": 5,
+        "trend": 200
+      },
+      "id": "sleeve:EEM:dip_rsi10_sma5",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    },
+    {
+      "ticker": "EEM",
+      "kind": "breakout",
+      "rule": {
+        "kind": "breakout",
+        "a": 50,
+        "b": 20,
+        "trend": 200
+      },
+      "id": "sleeve:EEM:brk_hi50_lo20",
+      "gates": {
+        "fits": false
+      },
+      "passed": false
+    }
+  ]
+}

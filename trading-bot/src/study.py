@@ -62,9 +62,10 @@ def _fwd(c: pd.Series, h: int, end: pd.Timestamp) -> pd.Series:
     return f.where(end_dates <= end)
 
 
-def study_ticker(t: str, df: pd.DataFrame, spy_ret: pd.Series, spy_up: pd.Series) -> dict:
+def study_ticker(t: str, df: pd.DataFrame, spy_ret: pd.Series, spy_up: pd.Series,
+                 win: tuple | None = None) -> dict:
     s = settings.load()
-    tr_s, tr_e = (pd.Timestamp(x) for x in settings.window("train"))
+    tr_s, tr_e = (pd.Timestamp(x) for x in (win or settings.window("train")))
     c = df["close"]
     up = trend_up(c, s["regime"]["trend_ma_days"])
     vh = vol_high(c, s["regime"]["vol_window_days"], s["regime"]["vol_lookback_days"])
