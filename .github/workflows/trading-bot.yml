@@ -1,0 +1,87 @@
+# Paper-Trading-Bot – läuft komplett auf GitHub, kein Laptop nötig.
+# Zeitplan (UTC). Der Bot entscheidet selbst nach New-York-Zeit, was zu tun ist
+# (src/tick.py) und läuft pro Tag nur einmal – mehrere Termine sind Absicherung,
+# weil GitHub geplante Läufe manchmal verspätet oder auslässt.
+name: Trading-Bot (Paper)
+
+on:
+  schedule:
+    - cron: "20 0 * * 2-6"    # Abend-Lauf  (19:20 NY Winter / 20:20 NY Sommer)
+    - cron: "20 1 * * 2-6"    # Abend-Lauf  Absicherung
+    - cron: "20 2 * * 2-6"    # Abend-Lauf  Absicherung
+    - cron: "50 3 * * 2-6"    # Abend-Lauf  letzte Chance + Alarm bei verpasstem Lauf
+    - cron: "50 14 * * 1-5"   # Morgen-Check (09:50 NY Winter / 10:50 NY Sommer)
+    - cron: "50 17 * * 1-5"   # Morgen-Check Absicherung
+    - cron: "15 9 * * 6"      # Samstag: Wochen-Review
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "Was soll der Bot tun?"
+        required: true
+        default: check-keys
+        type: choice
+        options:
+          - check-keys      # Keys gesetzt? (zeigt nie Werte)
+          - status          # was der Bot zu besitzen glaubt
+          - dry-run         # heutigen Abend-Lauf berechnen, nichts senden
+          - tick            # normaler geplanter Schritt jetzt ausführen
+          - pause           # keine neuen Sleeves / kein neues Leihen
+          - resume          # PAUSE aufheben
+          - flatten         # ALLES zum nächsten Open verkaufen + PAUSE
+          - review          # Review jetzt erstellen
+          - rotate          # Sleeve tauschen (args: "<live-id> <bank-id>", erst prüfen; mit --apply ändern)
+      args:
+        description: "Zusatz (nur für rotate), z. B. sleeve:XLK:dip_rsi10_sma5 sleeve:XLY:dip_rsi10_sma5 --apply"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trading-bot          # nie zwei Läufe gleichzeitig
+  cancel-in-progress: false
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: trading-bot
+    env:
+      ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+      ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+      ALPACA_PAPER: "true"                      # fest: nur Paper
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      CMD: ${{ github.event_name == 'workflow_dispatch' && inputs.command || (github.event.schedule == '15 9 * * 6' && 'review' || 'tick') }}
+      ARGS: ${{ inputs.args }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: trading-bot/requirements.txt
+      - name: Pakete installieren
+        run: pip install -q -r requirements.txt
+      - name: Zustand laden
+        run: bash ci/state.sh load
+      - name: "Bot: ${{ env.CMD }}"
+        run: |
+          set -euo pipefail
+          case "$CMD" in
+            tick)        python -m src.tick; tail -n 5 logs/scheduler.log || true ;;
+            check-keys)  python -m src.bot check-keys ;;
+            status)      python -m src.bot status ;;
+            dry-run)     python -m src.bot evening --dry-run ;;
+            pause)       python -m src.bot pause ;;
+            resume)      python -m src.bot resume ;;
+            flatten)     python -m src.bot flatten ;;
+            review)      python -m src.compare --alpaca && python -m src.review ;;
+            rotate)      python -m src.data && python -m src.adapt rotate $ARGS ;;
+          esac
+      - name: Zustand speichern
+        if: always()
+        run: bash ci/state.sh save

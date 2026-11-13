@@ -1,0 +1,19 @@
+# Secrets – niemals committen
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Grosse/erneuerbare Daten & Laufzeit-Zustand
+data/research/*.csv
+data/live/*
+!data/live/.gitkeep
+logs/*.log
+logs/*.jsonl
+PAUSE
+*.lock

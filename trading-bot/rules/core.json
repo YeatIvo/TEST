@@ -1,0 +1,7 @@
+{
+  "engine": "QQQ",
+  "safe": "GLD",
+  "kind": "sma",
+  "n": 200,
+  "weight": 1.0
+}

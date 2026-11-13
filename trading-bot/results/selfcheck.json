@@ -1,0 +1,27 @@
+{
+  "planted_edge": {
+    "trades": 433,
+    "avg_trade": 0.009724801286466316,
+    "pass": true
+  },
+  "pure_noise": {
+    "trades": 433,
+    "avg_trade": -0.0002652012135336837,
+    "pass": true
+  },
+  "cheat_caught": {
+    "pass": true,
+    "msg": "Signal am 2001-01-19 \u00e4ndert sich, wenn die Zukunft fehlt (True vs. False)"
+  },
+  "real_signals_clean": {
+    "pass": true,
+    "detail": {
+      "trend_switch SPY": true,
+      "dip entry QQQ": true,
+      "dip exit QQQ": true,
+      "breakout entry QQQ": true,
+      "breakout exit QQQ": true
+    }
+  },
+  "all_pass": true
+}

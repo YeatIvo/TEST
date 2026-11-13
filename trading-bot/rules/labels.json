@@ -1,0 +1,88 @@
+{
+  "SPY": [
+    "snaps_back"
+  ],
+  "QQQ": [
+    "keeps_going",
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "IWM": [
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "DIA": [
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "XLK": [
+    "keeps_going",
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "XLF": [
+    "keeps_going",
+    "moves_with_stocks"
+  ],
+  "XLY": [
+    "keeps_going",
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "XLE": [
+    "snaps_back"
+  ],
+  "XLV": [
+    "keeps_going",
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "XLI": [
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "XLP": [
+    "moves_with_stocks"
+  ],
+  "XLU": [],
+  "XLB": [
+    "moves_with_stocks"
+  ],
+  "XLRE": [
+    "moves_with_stocks"
+  ],
+  "XLC": [
+    "keeps_going",
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "SHY": [
+    "keeps_going",
+    "snaps_back"
+  ],
+  "IEF": [
+    "keeps_going",
+    "snaps_back"
+  ],
+  "TLT": [],
+  "GLD": [
+    "snaps_back"
+  ],
+  "SLV": [],
+  "EFA": [
+    "snaps_back",
+    "moves_with_stocks"
+  ],
+  "EEM": [
+    "moves_with_stocks"
+  ],
+  "BIL": [
+    "keeps_going",
+    "holds_up"
+  ],
+  "BTC-USD": [
+    "keeps_going",
+    "snaps_back",
+    "wild"
+  ]
+}
