@@ -1,0 +1,43 @@
+{
+  "core": {
+    "holdings": {}
+  },
+  "pending": [
+    {
+      "cid": "20261113-GLD-buy-core",
+      "symbol": "GLD",
+      "side": "buy",
+      "qty": 281,
+      "component": "core"
+    }
+  ],
+  "hwm": 100020.91,
+  "borrow_blocked": false,
+  "last_run": "2026-11-13",
+  "last_morning": null,
+  "runs": 1,
+  "sleeves": {
+    "sleeve:QQQ:brk_hi50_lo20": {
+      "status": "flat",
+      "symbol": "QQQ",
+      "shares": 0,
+      "entry_px": null,
+      "entry_date": null,
+      "hold_days": 0,
+      "stop_cid": null,
+      "exit_date": null,
+      "size": null
+    },
+    "sleeve:XLK:dip_rsi10_sma5": {
+      "status": "flat",
+      "symbol": "XLK",
+      "shares": 0,
+      "entry_px": null,
+      "entry_date": null,
+      "hold_days": 0,
+      "stop_cid": null,
+      "exit_date": null,
+      "size": null
+    }
+  }
+}
