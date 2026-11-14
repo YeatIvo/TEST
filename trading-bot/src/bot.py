@@ -424,9 +424,17 @@ def flatten(broker, state_path=STATE_PATH) -> list:
 
 
 def _in_window() -> bool:
+    """Abend-Lauf erlaubt nach Börsenschluss bis kurz vor dem nächsten Open (Alpaca MOO bis 09:28 NY)."""
     b = settings.load()["broker"]
     now = dt.datetime.now(NY).strftime("%H:%M")
-    return b["evening_run_after"] <= now <= b["evening_run_before"]
+    return now >= b["evening_run_after"] or now <= "09:13"
+
+
+def _last_closed_session(broker):
+    from .tick import EVENING_DELAY, sessions
+    now = dt.datetime.now(NY)
+    closed = [x for x in sessions(broker, now) if x.close + EVENING_DELAY <= now]
+    return pd.Timestamp(closed[-1].date) if closed else None
 
 
 def main(argv=None):
@@ -478,7 +486,8 @@ def main(argv=None):
     prices_fn = (lambda d: data.load_all(needed_tickers(cfg))) if a.asof else (lambda d: live_prices(cfg))
     bot = Bot(broker, prices_fn, dry_run=a.dry_run, cfg=cfg)
     if a.cmd == "evening":
-        r = bot.evening(a.asof)
+        asof = a.asof or _last_closed_session(broker)     # z. B. am Wochenende: letzter Freitag
+        r = bot.evening(asof)
         print(bot.summary(r) if "orders" in r else r["status"])
     else:
         print(bot.morning())

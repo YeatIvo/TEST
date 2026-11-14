@@ -1,18 +1,15 @@
 # Paper-Trading-Bot – läuft komplett auf GitHub, kein Laptop nötig.
-# Zeitplan (UTC). Der Bot entscheidet selbst nach New-York-Zeit, was zu tun ist
-# (src/tick.py) und läuft pro Tag nur einmal – mehrere Termine sind Absicherung,
-# weil GitHub geplante Läufe manchmal verspätet oder auslässt.
+# GitHub startet geplante Läufe teils Stunden zu spät – darum viele Termine; der Bot
+# erkennt selbst, was fällig ist, und handelt pro Sitzung nur einmal.
 name: Trading-Bot (Paper)
 
 on:
   schedule:
-    - cron: "20 0 * * 2-6"    # Abend-Lauf  (19:20 NY Winter / 20:20 NY Sommer)
-    - cron: "20 1 * * 2-6"    # Abend-Lauf  Absicherung
-    - cron: "20 2 * * 2-6"    # Abend-Lauf  Absicherung
-    - cron: "50 3 * * 2-6"    # Abend-Lauf  letzte Chance + Alarm bei verpasstem Lauf
-    - cron: "50 14 * * 1-5"   # Morgen-Check (09:50 NY Winter / 10:50 NY Sommer)
-    - cron: "50 17 * * 1-5"   # Morgen-Check Absicherung
-    - cron: "15 9 * * 6"      # Samstag: Wochen-Review
+    # Alle 2 Stunden (ungerade Minute, weil GitHub volle Stunden oft stark verspätet).
+    # Der Bot entscheidet selbst (src/tick.py): Morgen-Check nach dem Open, Abend-Lauf
+    # nach Börsenschluss – nachholbar bis kurz vor dem nächsten Open. Pro Tag nur einmal.
+    - cron: "37 */2 * * *"
+    - cron: "11 9 * * 6"      # Samstag: Wochen-Review
   workflow_dispatch:
     inputs:
       command:
@@ -55,7 +52,7 @@ jobs:
       ALPACA_PAPER: "true"                      # fest: nur Paper
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      CMD: ${{ github.event_name == 'workflow_dispatch' && inputs.command || (github.event.schedule == '15 9 * * 6' && 'review' || 'tick') }}
+      CMD: ${{ github.event_name == 'workflow_dispatch' && inputs.command || (github.event.schedule == '11 9 * * 6' && 'review' || 'tick') }}
       ARGS: ${{ inputs.args }}
     steps:
       - uses: actions/checkout@v4
