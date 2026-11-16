@@ -1,20 +1,14 @@
 {
   "core": {
-    "holdings": {}
-  },
-  "pending": [
-    {
-      "cid": "20261113-GLD-buy-core",
-      "symbol": "GLD",
-      "side": "buy",
-      "qty": 281,
-      "component": "core"
+    "holdings": {
+      "GLD": 281
     }
-  ],
+  },
+  "pending": [],
   "hwm": 100020.91,
   "borrow_blocked": false,
   "last_run": "2026-11-13",
-  "last_morning": null,
+  "last_morning": "2026-11-16",
   "runs": 1,
   "sleeves": {
     "sleeve:QQQ:brk_hi50_lo20": {
