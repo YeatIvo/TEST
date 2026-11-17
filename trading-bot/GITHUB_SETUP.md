@@ -28,7 +28,15 @@ Niemand sieht die Werte danach wieder, auch Claude nicht.
 - **Samstag**: Wochen-Review in `reports/` auf dem Branch `bot-state`.
 - Was der Bot besitzt, seine Logs und Berichte liegen auf dem Branch **`bot-state`**.
 
-## 5 · Steuern per Knopfdruck
+## 5 · Was der Bot automatisch macht
+- **Hauptstrategie:** QQQ über seiner 200-Tage-Linie → QQQ, sonst Gold (GLD).
+- **Zusatz-Strategien:** Bis zu 3 aus 11 getesteten Strategien (Dip-Buy, Breakout, „3 Tage runter“,
+  „Schwacher Schluss“, Trend-Rückeroberung). **Jedes Quartal wählt der Bot automatisch neu**, nur mit
+  Daten bis zum Quartalsende. Das ist die Routine aus dem Test, die am besten abgeschnitten hat.
+- **Schatten-Konto 1'000 CHF:** Rechnet jede Entscheidung mit nur 1'000 Franken nach (ganze Aktien).
+  Den Bericht findest du unter `trading-bot/reports/konto_1000chf.md` im Branch `bot-state`.
+
+## 6 · Steuern per Knopfdruck
 Unter **Actions → Trading-Bot (Paper) → Run workflow** kannst du einen Befehl wählen:
 
 | Befehl | Wirkung |
@@ -38,6 +46,7 @@ Unter **Actions → Trading-Bot (Paper) → Run workflow** kannst du einen Befeh
 | `flatten` | alles zum nächsten Open verkaufen und PAUSE setzen |
 | `review` | Bericht jetzt erstellen |
 | `rotate` | Sleeve tauschen: erst ohne `--apply` prüfen, dann mit `--apply` ausführen |
+| `konto-1000` | Schatten-Konto: was der Bot mit nur 1'000 CHF gemacht hätte (in Franken) |
 
 Regeln änderst du nur über diese Befehle. Der Bot hält seine aktiven Regeln auf dem Branch `bot-state`.
 

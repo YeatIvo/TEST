@@ -138,11 +138,17 @@ def rotate(out_id: str, in_id: str, apply: bool = False) -> dict:
                 s["enabled"] = False                   # Bot verkauft beim nächsten Abend-Lauf
         cfg["sleeves"].append({"id": new["id"], "ticker": new["ticker"], "kind": new["kind"], "rule": new["rule"],
                                "weight": settings.load()["portfolio"]["sleeve_weight"], "enabled": True})
-        (RULES / "config.json").write_text(json.dumps(cfg, indent=2))
+        save_config(cfg)
         write_kill_lines()
         changelog(f"Rotation: {out_id} → {new['id']}", "Bank-Sleeve besteht Rotate-Checks",
                   f"Rendite/DD {without['ret_dd']:.2f} → {with_new['ret_dd']:.2f}, Korr {corr:.2f}")
     return res
+
+
+def save_config(cfg: dict):
+    """Jede Änderung erhöht die Version – so gewinnt auf GitHub immer die neuere Regel-Datei."""
+    cfg["version"] = int(cfg.get("version", 0)) + 1
+    (RULES / "config.json").write_text(json.dumps(cfg, indent=2))
 
 
 def disable_sleeve(sid: str, why: str):
@@ -150,8 +156,39 @@ def disable_sleeve(sid: str, why: str):
     for s in cfg["sleeves"]:
         if s["id"] == sid:
             s["enabled"] = False
-    (RULES / "config.json").write_text(json.dumps(cfg, indent=2))
+    save_config(cfg)
     changelog(f"Sleeve abgeschaltet: {sid}", why, "Kill-Line (rules/kill_lines.json)")
+
+
+def apply_lineup(picks: list[dict], asof: str, holding: set[str] = frozenset(), quarter: str | None = None) -> dict:
+    """Quartals-Re-Pick übernehmen (Prompt 6-Routine, live). Nicht mehr gewählte Sleeves werden
+    abgeschaltet (der Bot verkauft offene Trades beim nächsten Abend-Lauf); flache, abgeschaltete
+    Sleeves werden entfernt; neue Sleeves starten leer und warten auf ihr Signal."""
+    cfg = json.loads((RULES / "config.json").read_text())
+    w = settings.load()["portfolio"]["sleeve_weight"]
+    pick_ids = [p["id"] for p in picks]
+    before = [s["id"] for s in cfg["sleeves"] if s.get("enabled", True)]
+    keep = []
+    for s in cfg["sleeves"]:
+        if s["id"] in pick_ids:
+            s["enabled"] = True
+            keep.append(s)
+        elif s["id"] in holding:              # noch im Trade -> abschalten, Bot verkauft
+            s["enabled"] = False
+            keep.append(s)
+    for p in picks:
+        if p["id"] not in {s["id"] for s in keep}:
+            keep.append({"id": p["id"], "ticker": p["ticker"], "kind": p["kind"], "rule": p["rule"],
+                         "weight": w, "enabled": True})
+    cfg["sleeves"] = keep
+    cfg["lineup_asof"] = asof
+    if quarter:
+        cfg["lineup_quarter"] = quarter
+    save_config(cfg)
+    write_kill_lines()
+    changelog(f"Quartals-Auswahl per {asof}: {', '.join(pick_ids) or 'keine'} (vorher {', '.join(before) or 'keine'})",
+              "Re-Pick-Routine (Prompt 6), automatisch", "results/repick.json")
+    return cfg
 
 
 def write_panel(kl: dict, statuses: dict | None = None):

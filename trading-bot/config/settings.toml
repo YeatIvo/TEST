@@ -66,3 +66,7 @@ paper_only  = true            # Live-Konto ist für dieses Projekt GESPERRT
 timezone    = "America/New_York"
 evening_run_after = "19:05"   # Alpaca nimmt MOO-Orders erst nach 19:00 NY an
 evening_run_before = "23:59"
+
+[shadow]
+# Schatten-Konten: rechnen jede Bot-Entscheidung mit kleinem Kapital (ganze Aktien) mit.
+accounts_chf = [1000]

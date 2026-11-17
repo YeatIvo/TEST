@@ -9,21 +9,34 @@
   },
   "sleeves": [
     {
-      "id": "sleeve:QQQ:brk_hi50_lo20",
-      "ticker": "QQQ",
-      "kind": "breakout",
+      "id": "sleeve:XLI:down3_sma5",
+      "ticker": "XLI",
+      "kind": "down3",
       "rule": {
-        "kind": "breakout",
-        "a": 50,
-        "b": 20,
+        "kind": "down3",
+        "a": 3,
+        "b": 5,
         "trend": 200
       },
       "weight": 0.2,
       "enabled": true
     },
     {
-      "id": "sleeve:XLK:dip_rsi10_sma5",
-      "ticker": "XLK",
+      "id": "sleeve:SPY:down3_sma5",
+      "ticker": "SPY",
+      "kind": "down3",
+      "rule": {
+        "kind": "down3",
+        "a": 3,
+        "b": 5,
+        "trend": 200
+      },
+      "weight": 0.2,
+      "enabled": true
+    },
+    {
+      "id": "sleeve:XLY:dip_rsi10_sma5",
+      "ticker": "XLY",
       "kind": "dip",
       "rule": {
         "kind": "dip",
@@ -39,5 +52,8 @@
   "margin": {
     "allowed": true,
     "max_gross": 1.6
-  }
+  },
+  "lineup_asof": "2026-09-30",
+  "lineup_quarter": "2026Q3",
+  "version": 1
 }

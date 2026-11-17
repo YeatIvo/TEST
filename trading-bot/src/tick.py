@@ -67,6 +67,42 @@ def plan(now: dt.datetime, sess: list[Session], last_run: str | None, last_morni
     return actions
 
 
+def prev_quarter(now: dt.datetime) -> str:
+    q = (now.month - 1) // 3          # 0..3 = aktuelles Quartal - 1
+    return f"{now.year - 1}Q4" if q == 0 else f"{now.year}Q{q}"
+
+
+def quarterly_repick(now: dt.datetime, st: dict) -> None:
+    """Erster Abend-Lauf eines neuen Quartals: Re-Pick-Routine (getestet in Phase P) wählt
+    die Sleeves neu, nur mit Daten bis zum Quartalsende. Läuft pro Quartal einmal."""
+    from . import adapt, data, repick
+    cfg = load_config()
+    label = prev_quarter(now)
+    if cfg.get("lineup_quarter") == label:
+        return
+    data.freeze_research()
+    prices = data.load_all()
+    import pandas as pd
+    qend = max(pd.Timestamp(q) for q in repick.quarter_ends(prices["SPY"].index))
+    picks = repick.pick_sleeves(qend, prices)
+    holding = {sid for sid, sl in st["sleeves"].items() if sl["status"] != "flat"}
+    new = adapt.apply_lineup(picks, str(qend.date()), holding, quarter=label)
+    names = ", ".join(f"{p['ticker']} {p['kind']}" for p in picks) or "keine"
+    log(f"Quartals-Auswahl {label}: {names}")
+    notify.send(f"🔄 Neue Zusatz-Strategien für {label}: {names}")
+
+
+def run_shadows(kind: str, d, prices, cfg) -> None:
+    """Schatten-Konten (z. B. 1000 CHF) machen jede Entscheidung mit – Fehler dort stoppen nie den Bot."""
+    from . import shadow
+    for chf in settings.load().get("shadow", {}).get("accounts_chf", []):
+        try:
+            r = shadow.morning(chf, d, prices, cfg) if kind == "morning" else shadow.evening(chf, d, prices, cfg)
+            log(f"Schatten {chf} CHF {kind}: {('ok' if r else 'nicht eingerichtet') if kind == 'morning' else (r or {}).get('status')}")
+        except Exception as e:
+            log(f"Schatten {chf} CHF FEHLER: {type(e).__name__}: {e}")
+
+
 def main():
     now = dt.datetime.now(NY)
     st = load_state()
@@ -76,16 +112,21 @@ def main():
         if not acts:
             log("nichts zu tun")
             return
+        if any(k == "evening" for k, _ in acts):
+            quarterly_repick(now, st)
         cfg = load_config()
-        bot = Bot(broker, lambda d: live_prices(cfg), cfg=cfg)
+        prices = live_prices(cfg)
+        bot = Bot(broker, lambda d: prices, cfg=cfg)
         for kind, d in acts:
             if kind == "late":
                 notify.send(f"⏰ Abend-Lauf für {d} wird knapp (Open bald) – wird jetzt versucht.")
             elif kind == "morning":
                 log(f"Morgen-Check {d}: {bot.morning(d)}")
+                run_shadows("morning", d, prices, cfg)
             else:
                 r = bot.evening(d)
                 log(f"Abend-Lauf {d}: {r.get('status')} Orders={len(r.get('orders', []))}")
+                run_shadows("evening", d, prices, cfg)
     except Abort as e:
         log(f"STOPP: {e}")
     except Exception as e:
