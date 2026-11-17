@@ -12,3 +12,4 @@ Was, Warum und dem zugehörigen Test eingetragen.
 | 2026-11-13 | Konto: Core + QQQ breakout + XLK dip, halbe Grösse an volatilen Tagen (`rules/config.json`) | Greedy-Auswahl Rendite/DD im Training | `src/account.py`, `results/account.json` |
 | 2026-11-13 | Phase H: Bot (Alpaca Paper), Risiko-Limits, Scheduler, Telegram, Simulator | Bot handelt rules/config.json | `tests/test_bot.py` (Bot = Backtest ±0.14 %/Tag) |
 | 2026-11-13 | Phase Adapt: Kill-Lines (`rules/kill_lines.json`), Entfernungsregeln, Bank/Rotation, Paper-vs-Backtest, Reviews | Strategien altern | `tests/test_adapt.py` |
+| 2026-11-17 | Quartals-Auswahl per 2026-09-30: sleeve:XLI:down3_sma5, sleeve:SPY:down3_sma5, sleeve:XLY:dip_rsi10_sma5 (vorher sleeve:QQQ:brk_hi50_lo20, sleeve:XLK:dip_rsi10_sma5) | Re-Pick-Routine (Prompt 6), automatisch | results/repick.json |

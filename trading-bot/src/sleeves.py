@@ -22,7 +22,7 @@ from . import backtest as bt
 from . import data, settings, signals
 from .core import calendar
 
-MIN_TRADES = {"dip": 15, "breakout": 6}
+MIN_TRADES = {"dip": 15, "ibs": 15, "down3": 15, "breakout": 6, "mom": 6}
 MIN_PF = 1.3
 
 
@@ -98,7 +98,7 @@ def write_panel(funnel, ideas, prices):
         f'border-radius:3px"></span><b>{v}</b></div>' for k, v in funnel.items())
     passed = [i for i in ideas if i["passed"]]
     rows = "".join(
-        f"<tr><td><b>{i['ticker']}</b></td><td>{'Dip-Buy' if i['kind']=='dip' else 'Breakout'}</td>"
+        f"<tr><td><b>{i['ticker']}</b></td><td>{signals.KIND_DE[i['kind']]}</td>"
         f"<td>{i['train']['trades']}</td><td>{_f(i['train']['total'])}</td><td>{i['train']['profit_factor']:.2f}</td>"
         f"<td>{i['lock']['trades']}</td><td>{_f(i['lock']['total'])}</td><td>{_f(i['lock']['maxdd'])}</td></tr>"
         for i in passed)

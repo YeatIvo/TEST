@@ -35,17 +35,34 @@ CORE_NEIGHBORS = [
 
 
 # ------------------------------------------------------------------ Sleeves
+# Sleeve-Typen. "snaps" = Mean-Reversion (passt zu Label snaps_back),
+# "trend" = Momentum (passt zu keeps_going). dip/breakout aus dem Video, ibs/down3/mom
+# sind zusätzliche Ideen (Prompt 4B) und müssen dieselben Gates bestehen.
+KINDS = {
+    "dip":      {"family": "snaps", "fits": "snaps_back"},   # RSI(2) < a, raus über SMA b / 10 Tage
+    "ibs":      {"family": "snaps", "fits": "snaps_back"},   # Schluss im unteren a % der Tagesspanne, raus über Vortageshoch / b Tage
+    "down3":    {"family": "snaps", "fits": "snaps_back"},   # a tiefere Schlusskurse in Folge, raus über SMA b / 10 Tage
+    "breakout": {"family": "trend", "fits": "keeps_going"},  # neues a-Tage-Hoch, raus bei b-Tage-Tief / unter SMA200
+    "mom":      {"family": "trend", "fits": "keeps_going"},  # Schluss erobert SMA a zurück (SMA a > SMA200), raus unter SMA b
+}
+
+
 @dataclass(frozen=True)
 class SleeveRule:
-    kind: str                 # 'dip' | 'breakout'
-    a: int                    # dip: RSI-Schwelle | breakout: Hoch-Fenster
-    b: int                    # dip: SMA-Ausstieg | breakout: Tief-Fenster
+    kind: str
+    a: int
+    b: int
     trend: int = 200
 
     @property
+    def family(self) -> str:
+        return KINDS[self.kind]["family"]
+
+    @property
     def name(self) -> str:
-        return (f"dip_rsi{self.a}_sma{self.b}" if self.kind == "dip"
-                else f"brk_hi{self.a}_lo{self.b}")
+        return {"dip": f"dip_rsi{self.a}_sma{self.b}", "breakout": f"brk_hi{self.a}_lo{self.b}",
+                "ibs": f"ibs{self.a}_h{self.b}", "down3": f"down{self.a}_sma{self.b}",
+                "mom": f"mom{self.a}_x{self.b}"}[self.kind]
 
     def entry(self, df: pd.DataFrame) -> pd.Series:
         c = df["close"]
@@ -53,33 +70,56 @@ class SleeveRule:
         up = c > m
         if self.kind == "dip":
             sig = (rsi(c, 2) < self.a) & up
-        else:
+        elif self.kind == "breakout":
             sig = (c >= c.rolling(self.a, min_periods=self.a).max()) & up
-        return sig.where(m.notna(), False).astype(bool)
+        elif self.kind == "ibs":
+            rng = (df["high"] - df["low"]).replace(0, float("nan"))
+            sig = ((c - df["low"]) / rng < self.a / 100) & up
+        elif self.kind == "down3":
+            lower = (c < c.shift(1)).astype(int)
+            sig = (lower.rolling(self.a, min_periods=self.a).sum() == self.a) & up
+        else:  # mom
+            f = sma(c, self.a)
+            sig = (c > f) & (c.shift(1) <= f.shift(1)) & (f > m)
+        return sig.where(m.notna(), False).fillna(False).astype(bool)
 
     def exit(self, df: pd.DataFrame) -> pd.Series:
         c = df["close"]
-        if self.kind == "dip":
+        if self.kind in ("dip", "down3"):
             return (c > sma(c, self.b)).fillna(False)
-        low = c <= c.rolling(self.b, min_periods=self.b).min()
-        return (low | (c < sma(c, self.trend))).fillna(False)
+        if self.kind == "ibs":
+            return (c > df["high"].shift(1)).fillna(False)
+        if self.kind == "breakout":
+            low = c <= c.rolling(self.b, min_periods=self.b).min()
+            return (low | (c < sma(c, self.trend))).fillna(False)
+        return (c < sma(c, self.b)).fillna(False)  # mom
 
     @property
     def max_hold(self) -> int | None:
-        return 10 if self.kind == "dip" else None
+        return {"dip": 10, "down3": 10, "ibs": self.b}.get(self.kind)
 
     def stop_pct(self, s: dict) -> float:
-        return s["risk"]["dip_stop_pct"] if self.kind == "dip" else s["risk"]["breakout_stop_pct"]
+        return s["risk"]["dip_stop_pct"] if self.family == "snaps" else s["risk"]["breakout_stop_pct"]
 
     def neighbors(self) -> list["SleeveRule"]:
-        if self.kind == "dip":
-            return [SleeveRule("dip", 5, self.b), SleeveRule("dip", 15, self.b),
-                    SleeveRule("dip", self.a, 3), SleeveRule("dip", self.a, 10)]
-        return [SleeveRule("breakout", 20, self.b), SleeveRule("breakout", 100, self.b)]
+        k, a, b = self.kind, self.a, self.b
+        if k == "dip":
+            return [SleeveRule(k, 5, b), SleeveRule(k, 15, b), SleeveRule(k, a, 3), SleeveRule(k, a, 10)]
+        if k == "breakout":
+            return [SleeveRule(k, 20, b), SleeveRule(k, 100, b)]
+        if k == "ibs":
+            return [SleeveRule(k, 10, b), SleeveRule(k, 30, b), SleeveRule(k, a, 3), SleeveRule(k, a, 8)]
+        if k == "down3":
+            return [SleeveRule(k, 2, b), SleeveRule(k, 4, b), SleeveRule(k, a, 3), SleeveRule(k, a, 10)]
+        return [SleeveRule(k, 10, b), SleeveRule(k, 30, b), SleeveRule(k, a, 30), SleeveRule(k, a, 100)]
 
 
-BASE_SLEEVES = {"dip": SleeveRule("dip", 10, 5), "breakout": SleeveRule("breakout", 50, 20)}
-FITS = {"dip": "snaps_back", "breakout": "keeps_going"}
+BASE_SLEEVES = {"dip": SleeveRule("dip", 10, 5), "breakout": SleeveRule("breakout", 50, 20),
+                "ibs": SleeveRule("ibs", 20, 5), "down3": SleeveRule("down3", 3, 5),
+                "mom": SleeveRule("mom", 20, 50)}
+FITS = {k: v["fits"] for k, v in KINDS.items()}
+KIND_DE = {"dip": "Dip-Buy (RSI)", "breakout": "Breakout", "ibs": "Schwacher Schluss (IBS)",
+           "down3": "3 Tage runter", "mom": "Trend-Rückeroberung"}
 
 
 def rule_from_dict(d: dict) -> SleeveRule:

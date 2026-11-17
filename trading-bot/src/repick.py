@@ -24,7 +24,7 @@ from .account import account_returns
 from .core import calendar, core_returns, equity_svg
 from .indicators import trend_up
 
-MIN_TRADES = {"dip": 10, "breakout": 4}
+MIN_TRADES = {"dip": 10, "ibs": 10, "down3": 10, "breakout": 4, "mom": 4}
 MIN_PF = 1.3
 MAX_CORR = 0.6
 

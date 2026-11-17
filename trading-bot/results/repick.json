@@ -3,68 +3,74 @@
   "probe_ok": true,
   "lineups": {
     "2024-03-28": [
-      "XLI dip",
-      "DIA dip"
+      "XLC ibs",
+      "EFA down3",
+      "DIA down3"
     ],
     "2024-06-28": [
-      "XLK breakout"
+      "XLK breakout",
+      "QQQ down3"
     ],
     "2024-09-30": [
-      "XLC dip"
+      "XLC ibs",
+      "XLE down3",
+      "DIA down3"
     ],
     "2024-12-31": [
-      "QQQ breakout"
+      "QQQ mom",
+      "GLD mom"
     ],
     "2025-03-31": [
-      "SHY breakout",
-      "XLC dip"
+      "SHY mom",
+      "XLC down3",
+      "DIA ibs"
     ],
     "2025-06-30": [
-      "SHY breakout",
+      "SHY mom",
       "XLC breakout",
       "XLY dip"
     ],
     "2025-09-30": [
+      "XLC down3",
       "XLY breakout",
-      "QQQ dip",
-      "XLC dip"
+      "QQQ ibs"
     ],
     "2025-12-31": [
       "GLD dip",
-      "SHY breakout",
-      "XLI dip"
+      "SHY mom",
+      "XLI down3"
     ],
     "2026-03-31": [
+      "XLI down3",
       "XLY dip",
-      "XLI dip",
-      "GLD dip"
+      "SHY mom"
     ],
     "2026-06-30": [
+      "XLI down3",
       "XLY dip",
-      "XLI dip",
-      "GLD dip"
+      "GLD ibs"
     ],
     "2026-09-30": [
-      "XLI dip",
-      "XLY dip",
-      "SPY dip"
+      "XLI down3",
+      "SPY down3",
+      "XLY dip"
     ]
   },
   "results": {
     "routine": {
       "since_2024q2": {
-        "total": 0.5922533096315388,
-        "cagr": 0.1946727552120151,
-        "maxdd": -0.15147657433833062,
-        "ret_dd": 1.2851674000575404,
-        "sharpe": 0.9664372724464563
+        "total": 0.6103919377119329,
+        "cagr": 0.1998587879504916,
+        "maxdd": -0.14990555588461585,
+        "ret_dd": 1.3332313587117837,
+        "sharpe": 0.9762155973466913
       },
       "since_2025": {
-        "total": 0.38961912085921546,
-        "cagr": 0.1938338321271027,
-        "maxdd": -0.15147657433833028,
-        "ret_dd": 1.2796290975934366,
-        "sharpe": 0.9400705194325233
+        "total": 0.4034361715530812,
+        "cagr": 0.20021096246251258,
+        "maxdd": -0.14990555588461596,
+        "ret_dd": 1.335580667981494,
+        "sharpe": 0.9630697106761373
       }
     },
     "core": {
@@ -101,9 +107,9 @@
     }
   },
   "latest_pick": [
-    "XLI dip",
-    "XLY dip",
-    "SPY dip"
+    "XLI down3",
+    "SPY down3",
+    "XLY dip"
   ],
   "current_config": [
     "QQQ breakout",

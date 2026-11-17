@@ -150,7 +150,7 @@ def write_panel(o, cfg, acc_r, core_r, spy, borrowed, period, cmat):
     chart_lock = equity_svg({"Konto": lk(acc_r), "SPY": lk(spy), "Core allein": lk(core_r)})
     steps = "".join(f"<tr><td>{st['step']}</td><td>{_f(st['cagr'])}</td><td>{_f(st['maxdd'])}</td>"
                     f"<td><b>{_f(st['ret_dd'],False)}</b></td></tr>" for st in o["steps"])
-    sl = "".join(f"<tr><td>{x['ticker']}</td><td>{'Dip-Buy' if x['kind']=='dip' else 'Breakout'}</td>"
+    sl = "".join(f"<tr><td>{x['ticker']}</td><td>{signals.KIND_DE[x['kind']]}</td>"
                  f"<td>{x['weight']*100:.0f} %</td></tr>" for x in cfg["sleeves"])
     yrs = "".join(f"<tr><td>{y}</td><td>{_f(v)}</td><td>{_f(o['spy_yearly'][y])}</td></tr>" for y, v in o["yearly"].items())
     cm = "".join(f"<tr><th>{a}</th>" + "".join(f"<td>{cmat.loc[a,b]:.2f}</td>" for b in cmat.columns) + "</tr>"

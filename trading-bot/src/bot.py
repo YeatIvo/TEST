@@ -250,7 +250,7 @@ class Bot:
         for sl_cfg in self.cfg["sleeves"]:
             sid, sym = sl_cfg["id"], sl_cfg["ticker"]
             sl, sig = st["sleeves"][sid], d["sleeves"][sid]
-            comp = "dip" if sl_cfg["kind"] == "dip" else "brk"
+            comp = sl_cfg["kind"][:3]
             if sl["status"] == "in_trade":
                 sl["hold_days"] += 1
                 reason = ("exit" if sig["exit"] else
@@ -371,8 +371,9 @@ class Bot:
                     continue
                 if sl["stop_cid"] and (o := self.b.get_order(sl["stop_cid"])) and o["status"] == "filled":
                     continue                                   # Reconcile verbucht das am Abend
-                kind = next(s["kind"] for s in self.cfg["sleeves"] if s["id"] == sid)
-                pct = self.s["risk"]["dip_stop_pct"] if kind == "dip" else self.s["risk"]["breakout_stop_pct"]
+                sc = next(s for s in self.cfg["sleeves"] if s["id"] == sid)
+                kind = sc["kind"]
+                pct = signals.rule_from_dict(sc["rule"]).stop_pct(self.s)
                 stop = round(sl["entry_px"] * (1 - pct), 2)
                 cid = f"{today:%Y%m%d}-{sl['symbol']}-stop-{kind[:3]}"[:48]
                 if not self.dry and not self.b.get_order(cid):

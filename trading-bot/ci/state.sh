@@ -15,6 +15,15 @@ case "${1:-}" in
     if git fetch -q --depth 1 origin "$BR" 2>/dev/null; then
       mkdir -p "$W.load"
       git archive FETCH_HEAD | tar -x -C "$W.load"
+      # Regeln: die neuere Version gewinnt (main nach einem Update, sonst die vom Bot geänderte)
+      ver() { python3 -c 'import json,sys
+try: print(int(json.load(open(sys.argv[1])).get("version", 0)))
+except Exception: print(-1)' "$1"; }
+      sv=$(ver "$W.load/trading-bot/rules/config.json"); mv=$(ver trading-bot/rules/config.json)
+      if [ "$sv" -lt "$mv" ]; then
+        rm -rf "$W.load/trading-bot/rules"
+        echo "Regeln aus main sind neuer (v$mv > v$sv) – werden übernommen."
+      fi
       rm -f trading-bot/PAUSE
       cp -a "$W.load/trading-bot/." trading-bot/
       echo "Zustand geladen ($(git rev-parse --short FETCH_HEAD))."
@@ -25,7 +34,7 @@ case "${1:-}" in
   save)
     git config user.name "trading-bot"
     git config user.email "trading-bot@users.noreply.github.com"
-    rm -rf "$W"
+    rm -rf "$W"; git worktree prune
     if git fetch -q --depth 1 origin "$BR" 2>/dev/null; then
       git worktree add -q -B "$BR" "$W" FETCH_HEAD
     else

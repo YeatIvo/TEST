@@ -27,6 +27,8 @@ on:
           - flatten         # ALLES zum nächsten Open verkaufen + PAUSE
           - review          # Review jetzt erstellen
           - rotate          # Sleeve tauschen (args: "<live-id> <bank-id>", erst prüfen; mit --apply ändern)
+          - konto-1000      # Bericht Schatten-Konto 1000 CHF anzeigen
+          - shadow-init     # Schatten-Konto starten (args: --chf 1000 --start JJJJ-MM-TT --mirror GLD:354.02)
       args:
         description: "Zusatz (nur für rotate), z. B. sleeve:XLK:dip_rsi10_sma5 sleeve:XLY:dip_rsi10_sma5 --apply"
         required: false
@@ -78,6 +80,8 @@ jobs:
             flatten)     python -m src.bot flatten ;;
             review)      python -m src.compare --alpaca && python -m src.review ;;
             rotate)      python -m src.data && python -m src.adapt rotate $ARGS ;;
+            konto-1000)  python -m src.shadow report --chf 1000 ;;
+            shadow-init) python -m src.shadow init $ARGS ;;
           esac
       - name: Zustand speichern
         if: always()
