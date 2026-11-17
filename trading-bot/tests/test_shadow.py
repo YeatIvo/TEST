@@ -66,3 +66,27 @@ def test_apply_lineup_keeps_open_trades_and_bumps_version(tmp_path, monkeypatch)
     assert ids["sleeve:GLD:ibs20_h5"] is True
     assert len(ids) == 2                                 # flache, nicht gewählte Sleeves entfernt
     assert cfg["version"] == cfg0.get("version", 0) + 1 and cfg["lineup_quarter"] == "2026Q4"
+
+
+@pytest.mark.skipif(not HAVE, reason="Daten/Regeln fehlen")
+def test_shadow_2000_monthly_deposits_and_twins(tmp_path, monkeypatch):
+    monkeypatch.setitem(settings.DIRS, "live", tmp_path / "live")
+    monkeypatch.setitem(settings.DIRS, "reports", tmp_path / "rep")
+    (tmp_path / "rep").mkdir()
+    monkeypatch.setattr(shadow, "fx_usdchf", lambda on=None: 0.80)
+    cfg = botmod.load_config()
+    prices = data.load_all(botmod.needed_tickers(cfg))
+    # Zwilling = Original x 0.4 (wie QQQM ~ QQQ / 2.4) -> gleiche Signale, 2.5x mehr Stück
+    monkeypatch.setattr(shadow, "_fetch_twin",
+                        lambda t: prices["GLD"][["open", "high", "low", "close", "volume"]] * [0.4, 0.4, 0.4, 0.4, 1])
+    cal = prices["SPY"].index
+    oct_end = cal[cal < "2026-11-01"][-3]                        # Start Ende Oktober
+    shadow.init(2000, str(oct_end.date()), cfg=cfg, monthly=300, twins={"GLD": "GLDM"})
+    for d in cal[(cal > oct_end) & (cal <= cal[cal >= "2026-11-01"][2])]:
+        r = shadow.evening(2000, d, prices, cfg)
+        assert r["status"] == "ok"
+    acc = json.loads((tmp_path / "live" / "shadow_2000chf" / "account.json").read_text())
+    assert acc["deposited_chf"] == 2300 and len(acc["deposits"]) == 1          # genau eine Einzahlung im November
+    assert acc["deposits"][0]["date"] == str(cal[cal >= "2026-11-01"][0].date())
+    rep = (tmp_path / "rep" / "konto_2000chf.md").read_text()
+    assert "Eingezahlt | 2,300 CHF" in rep and "GLD→GLDM" in rep
