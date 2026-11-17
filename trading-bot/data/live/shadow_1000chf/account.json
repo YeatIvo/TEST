@@ -1,0 +1,30 @@
+{
+  "chf": 1000,
+  "start_date": "2026-11-16",
+  "fx_start": 0.8359299898147583,
+  "start_usd": 1196.2724297301495,
+  "sim": {
+    "cash": 133.68139973014968,
+    "date": "2026-11-16",
+    "pos": {
+      "GLD": 3
+    },
+    "orders": {
+      "2026-11-16-GLD-mirror": {
+        "id": "2026-11-16-GLD-mirror",
+        "cid": "2026-11-16-GLD-mirror",
+        "symbol": "GLD",
+        "side": "buy",
+        "qty": 3,
+        "type": "market",
+        "stop": null,
+        "status": "filled",
+        "filled_qty": 3,
+        "filled_avg_price": 354.02,
+        "placed": null,
+        "filled_on": "2026-11-16 00:00:00"
+      }
+    },
+    "prev_equity": null
+  }
+}
