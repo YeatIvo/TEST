@@ -67,6 +67,11 @@ timezone    = "America/New_York"
 evening_run_after = "19:05"   # Alpaca nimmt MOO-Orders erst nach 19:00 NY an
 evening_run_before = "23:59"
 
-[shadow]
 # Schatten-Konten: rechnen jede Bot-Entscheidung mit kleinem Kapital (ganze Aktien) mit.
-accounts_chf = [1000]
+# Start/Einzahlung/Zwillinge werden beim Einrichten (python -m src.shadow init ...) festgelegt.
+[[shadow.accounts]]
+chf = 1000                     # gleiche ETFs wie das grosse Konto
+
+[[shadow.accounts]]
+chf = 2000                     # dein Plan: 2000 CHF + 300 CHF/Monat, günstige Zwillings-ETFs
+monthly_chf = 300

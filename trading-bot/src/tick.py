@@ -95,7 +95,8 @@ def quarterly_repick(now: dt.datetime, st: dict) -> None:
 def run_shadows(kind: str, d, prices, cfg) -> None:
     """Schatten-Konten (z. B. 1000 CHF) machen jede Entscheidung mit – Fehler dort stoppen nie den Bot."""
     from . import shadow
-    for chf in settings.load().get("shadow", {}).get("accounts_chf", []):
+    for acct in shadow.accounts():
+        chf = acct["chf"]
         try:
             r = shadow.morning(chf, d, prices, cfg) if kind == "morning" else shadow.evening(chf, d, prices, cfg)
             log(f"Schatten {chf} CHF {kind}: {('ok' if r else 'nicht eingerichtet') if kind == 'morning' else (r or {}).get('status')}")

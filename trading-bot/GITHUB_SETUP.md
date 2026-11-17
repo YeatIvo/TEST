@@ -47,6 +47,7 @@ Unter **Actions → Trading-Bot (Paper) → Run workflow** kannst du einen Befeh
 | `review` | Bericht jetzt erstellen |
 | `rotate` | Sleeve tauschen: erst ohne `--apply` prüfen, dann mit `--apply` ausführen |
 | `konto-1000` | Schatten-Konto: was der Bot mit nur 1'000 CHF gemacht hätte (in Franken) |
+| `konto-2000` | Schatten-Konto „dein Plan“: 2'000 CHF Start + 300 CHF jeden Monat, günstige ETFs (QQQM, GLDM, SPYM) |
 
 Regeln änderst du nur über diese Befehle. Der Bot hält seine aktiven Regeln auf dem Branch `bot-state`.
 
