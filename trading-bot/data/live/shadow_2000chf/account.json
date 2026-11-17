@@ -14,9 +14,9 @@
   "last_deposit_month": "2026-11",
   "sim": {
     "cash": 2392.544859460299,
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "pos": {},
     "orders": {},
-    "prev_equity": null
+    "prev_equity": 2392.544859460299
   }
 }
