@@ -1,0 +1,46 @@
+{
+  "core": {
+    "holdings": {}
+  },
+  "pending": [],
+  "hwm": null,
+  "borrow_blocked": false,
+  "last_run": "2026-11-16",
+  "last_morning": "2026-11-16",
+  "runs": 1,
+  "sleeves": {
+    "sleeve:XLI:down3_sma5": {
+      "status": "flat",
+      "symbol": "XLI",
+      "shares": 0,
+      "entry_px": null,
+      "entry_date": null,
+      "hold_days": 0,
+      "stop_cid": null,
+      "exit_date": null,
+      "size": null
+    },
+    "sleeve:SPY:down3_sma5": {
+      "status": "flat",
+      "symbol": "SPY",
+      "shares": 0,
+      "entry_px": null,
+      "entry_date": null,
+      "hold_days": 0,
+      "stop_cid": null,
+      "exit_date": null,
+      "size": null
+    },
+    "sleeve:XLY:dip_rsi10_sma5": {
+      "status": "flat",
+      "symbol": "XLY",
+      "shares": 0,
+      "entry_px": null,
+      "entry_date": null,
+      "hold_days": 0,
+      "stop_cid": null,
+      "exit_date": null,
+      "size": null
+    }
+  }
+}

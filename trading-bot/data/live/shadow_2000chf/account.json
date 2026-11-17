@@ -1,0 +1,22 @@
+{
+  "chf": 2000,
+  "start_date": "2026-11-16",
+  "fx_start": 0.8359299898147583,
+  "start_usd": 2392.544859460299,
+  "monthly_chf": 300.0,
+  "twins": {
+    "QQQ": "QQQM",
+    "GLD": "GLDM",
+    "SPY": "SPYM"
+  },
+  "deposited_chf": 2000,
+  "deposits": [],
+  "last_deposit_month": "2026-11",
+  "sim": {
+    "cash": 2392.544859460299,
+    "date": "2026-11-16",
+    "pos": {},
+    "orders": {},
+    "prev_equity": null
+  }
+}
