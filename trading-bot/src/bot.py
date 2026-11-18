@@ -424,6 +424,28 @@ def flatten(broker, state_path=STATE_PATH) -> list:
     return out
 
 
+def diagnose(broker) -> None:
+    """Zeigt Kontostand/Kaufkraft und die letzten Orders mit allen Zeitstempeln (keine Schlüssel)."""
+    from alpaca.trading.enums import QueryOrderStatus
+    from alpaca.trading.requests import GetOrdersRequest
+    acc = broker.account()
+    for f in ("status", "equity", "last_equity", "cash", "buying_power", "regt_buying_power",
+              "daytrading_buying_power", "non_marginable_buying_power", "multiplier", "shorting_enabled",
+              "pattern_day_trader", "trading_blocked", "account_blocked"):
+        print(f"{f:28s} {getattr(acc, f, None)}")
+    try:
+        cfgs = broker.c.get_account_configurations()
+        print(f"{'max_margin_multiplier':28s} {getattr(cfgs, 'max_margin_multiplier', None)}")
+    except Exception as e:
+        print("account_configurations: n/a", e)
+    print()
+    for o in broker.c.get_orders(GetOrdersRequest(status=QueryOrderStatus.ALL, limit=15)):
+        print(" | ".join(str(x) for x in (o.client_order_id, o.symbol, o.side.value, o.qty, o.order_type.value,
+                                          o.time_in_force.value, o.status.value, f"sub={o.submitted_at}",
+                                          f"fill={o.filled_at}", f"exp={o.expired_at}", f"canc={o.canceled_at}",
+                                          f"fail={o.failed_at}", f"px={o.filled_avg_price}")))
+
+
 def _in_window() -> bool:
     """Abend-Lauf erlaubt nach Börsenschluss bis kurz vor dem nächsten Open (Alpaca MOO bis 09:28 NY)."""
     b = settings.load()["broker"]
@@ -440,7 +462,8 @@ def _last_closed_session(broker):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Trading-Bot (nur Paper)")
-    ap.add_argument("cmd", choices=["evening", "morning", "status", "pause", "resume", "flatten", "check-keys"])
+    ap.add_argument("cmd", choices=["evening", "morning", "status", "pause", "resume", "flatten", "check-keys",
+                                    "orders"])
     ap.add_argument("--dry-run", action="store_true", help="alles berechnen, nichts senden/speichern")
     ap.add_argument("--asof", help="als ob heute dieses Datum wäre (nur mit --dry-run oder --sim)")
     ap.add_argument("--sim", action="store_true", help="simuliertes Paper-Konto statt Alpaca")
@@ -477,6 +500,9 @@ def main(argv=None):
         print(bot.summary(bot.evening(asof)))
         return
     broker = AlpacaBroker()
+    if a.cmd == "orders":
+        diagnose(broker)
+        return
     if a.cmd == "flatten":
         print("Verkauf zum nächsten Open:", flatten(broker))
         return
