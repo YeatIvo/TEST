@@ -20,6 +20,7 @@ on:
         options:
           - check-keys      # Keys gesetzt? (zeigt nie Werte)
           - status          # was der Bot zu besitzen glaubt
+          - orders          # Diagnose: Kaufkraft und letzte Orders bei Alpaca (zeigt nie Schlüssel)
           - dry-run         # heutigen Abend-Lauf berechnen, nichts senden
           - tick            # normaler geplanter Schritt jetzt ausführen
           - pause           # keine neuen Sleeves / kein neues Leihen
@@ -75,6 +76,7 @@ jobs:
             tick)        python -m src.tick; tail -n 5 logs/scheduler.log || true ;;
             check-keys)  python -m src.bot check-keys ;;
             status)      python -m src.bot status ;;
+            orders)      python -m src.bot orders ;;
             dry-run)     python -m src.bot evening --dry-run ;;
             pause)       python -m src.bot pause ;;
             resume)      python -m src.bot resume ;;
