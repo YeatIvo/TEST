@@ -50,13 +50,20 @@ def sessions(broker, now: dt.datetime) -> list[Session]:
     return sorted((Session(c.date, _ny(c.open), _ny(c.close)) for c in cal), key=lambda s: s.date)
 
 
+def evening_start(s: Session) -> dt.datetime:
+    """Frühester Abend-Lauf: 15 Min. nach Schluss, aber nie vor 19:05 NY – Alpaca nimmt
+    Market-on-Open-Orders erst ab 19:00 an (Fehler 40310000 am 17.11.)."""
+    h, m = map(int, settings.load()["broker"]["evening_run_after"].split(":"))
+    return max(s.close + EVENING_DELAY, dt.datetime.combine(s.date, dt.time(h, m), tzinfo=NY))
+
+
 def plan(now: dt.datetime, sess: list[Session], last_run: str | None, last_morning: str | None) -> list[tuple]:
     """Reine Funktion: welche Schritte sind jetzt fällig? -> [("morning", d), ("evening", d), ("late", d)]"""
     actions = []
     today = next((s for s in sess if s.date == now.date()), None)
     if today and now >= today.open + MORNING_DELAY and last_morning != str(today.date):
         actions.append(("morning", today.date))
-    closed = [s for s in sess if s.close + EVENING_DELAY <= now]
+    closed = [s for s in sess if evening_start(s) <= now]
     if closed:
         s = closed[-1]
         nxt = next((x for x in sess if x.date > s.date), None)
