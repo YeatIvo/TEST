@@ -13,9 +13,13 @@
   "deposits": [],
   "last_deposit_month": "2026-11",
   "sim": {
-    "cash": 2392.544859460299,
-    "date": "2026-11-17",
-    "pos": {},
+    "cash": -333.1673216462684,
+    "date": "2026-11-18",
+    "pos": {
+      "SPY": 2,
+      "XLY": 2,
+      "GLD": 31
+    },
     "orders": {
       "20261117-SPY-buy-dow": {
         "id": "20261117-SPY-buy-dow",
@@ -25,11 +29,11 @@
         "qty": 2,
         "type": "market",
         "stop": null,
-        "status": "accepted",
-        "filled_qty": 0,
-        "filled_avg_price": null,
+        "status": "filled",
+        "filled_qty": 2,
+        "filled_avg_price": 86.31999969482422,
         "placed": "2026-11-17 00:00:00",
-        "filled_on": null
+        "filled_on": "2026-11-18 00:00:00"
       },
       "20261117-XLY-buy-dip": {
         "id": "20261117-XLY-buy-dip",
@@ -39,11 +43,11 @@
         "qty": 2,
         "type": "market",
         "stop": null,
-        "status": "accepted",
-        "filled_qty": 0,
-        "filled_avg_price": null,
+        "status": "filled",
+        "filled_qty": 2,
+        "filled_avg_price": 117.2300033569336,
         "placed": "2026-11-17 00:00:00",
-        "filled_on": null
+        "filled_on": "2026-11-18 00:00:00"
       },
       "20261117-GLD-buy-core": {
         "id": "20261117-GLD-buy-core",
@@ -53,10 +57,38 @@
         "qty": 31,
         "type": "market",
         "stop": null,
-        "status": "accepted",
+        "status": "filled",
+        "filled_qty": 31,
+        "filled_avg_price": 74.75,
+        "placed": "2026-11-17 00:00:00",
+        "filled_on": "2026-11-18 00:00:00"
+      },
+      "20261118-SPY-stop-dow": {
+        "id": "20261118-SPY-stop-dow",
+        "cid": "20261118-SPY-stop-dow",
+        "symbol": "SPY",
+        "side": "sell",
+        "qty": 2,
+        "type": "stop",
+        "stop": 79.41,
+        "status": "new",
         "filled_qty": 0,
         "filled_avg_price": null,
-        "placed": "2026-11-17 00:00:00",
+        "placed": "2026-11-18 00:00:00",
+        "filled_on": null
+      },
+      "20261118-XLY-stop-dip": {
+        "id": "20261118-XLY-stop-dip",
+        "cid": "20261118-XLY-stop-dip",
+        "symbol": "XLY",
+        "side": "sell",
+        "qty": 2,
+        "type": "stop",
+        "stop": 107.85,
+        "status": "new",
+        "filled_qty": 0,
+        "filled_avg_price": null,
+        "placed": "2026-11-18 00:00:00",
         "filled_on": null
       }
     },

@@ -4,19 +4,11 @@
       "GLD": 3
     }
   },
-  "pending": [
-    {
-      "cid": "20261117-XLY-buy-dip",
-      "symbol": "XLY",
-      "side": "buy",
-      "qty": 1,
-      "component": "sleeve:XLY:dip_rsi10_sma5"
-    }
-  ],
+  "pending": [],
   "hwm": 1191.121432689134,
   "borrow_blocked": false,
   "last_run": "2026-11-17",
-  "last_morning": "2026-11-17",
+  "last_morning": "2026-11-18",
   "runs": 2,
   "sleeves": {
     "sleeve:XLI:down3_sma5": {
@@ -42,13 +34,13 @@
       "size": null
     },
     "sleeve:XLY:dip_rsi10_sma5": {
-      "status": "pending_entry",
+      "status": "in_trade",
       "symbol": "XLY",
-      "shares": 0,
-      "entry_px": null,
-      "entry_date": null,
+      "shares": 1,
+      "entry_px": 117.2300033569336,
+      "entry_date": "2026-11-18",
       "hold_days": 0,
-      "stop_cid": null,
+      "stop_cid": "20261118-XLY-stop-dip",
       "exit_date": null,
       "size": 0.1
     }
