@@ -432,9 +432,9 @@ def _in_window() -> bool:
 
 
 def _last_closed_session(broker):
-    from .tick import EVENING_DELAY, sessions
+    from .tick import evening_start, sessions
     now = dt.datetime.now(NY)
-    closed = [x for x in sessions(broker, now) if x.close + EVENING_DELAY <= now]
+    closed = [x for x in sessions(broker, now) if evening_start(x) <= now]
     return pd.Timestamp(closed[-1].date) if closed else None
 
 

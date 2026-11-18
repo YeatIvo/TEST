@@ -37,8 +37,14 @@ def test_already_ran_nothing_to_do():
 
 
 def test_morning_check_then_evening_same_tick_if_delayed():
-    acts = plan(T(11, 13, 17, 0), CAL, "2026-11-12", "2026-11-12")
+    acts = plan(T(11, 13, 20, 0), CAL, "2026-11-12", "2026-11-12")
     assert acts == [("morning", dt.date(2026, 11, 13)), ("evening", dt.date(2026, 11, 13))]
+
+
+def test_no_opg_orders_before_19h():
+    """Regression 17.11.: Lauf um 17:36 NY -> Alpaca lehnt OPG-Orders vor 19:00 ab."""
+    assert plan(T(11, 13, 17, 36), CAL, "2026-11-12", "2026-11-12") == [("morning", dt.date(2026, 11, 13))]
+    assert plan(T(11, 13, 19, 6), CAL, "2026-11-12", "2026-11-13") == [("evening", dt.date(2026, 11, 13))]
 
 
 def test_no_evening_during_session():
@@ -47,4 +53,5 @@ def test_no_evening_during_session():
 
 def test_early_close_day():
     cal = [S(2026, 11, 25), S(2026, 11, 27, c=(13, 0)), S(2026, 11, 30)]
-    assert plan(T(11, 27, 13, 30), cal, "2026-11-25", "2026-11-27") == [("evening", dt.date(2026, 11, 27))]
+    assert plan(T(11, 27, 13, 30), cal, "2026-11-25", "2026-11-27") == []          # erst ab 19:05
+    assert plan(T(11, 27, 19, 30), cal, "2026-11-25", "2026-11-27") == [("evening", dt.date(2026, 11, 27))]
