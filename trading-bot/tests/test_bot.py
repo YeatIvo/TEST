@@ -152,3 +152,13 @@ def test_alpaca_trading_day_accepts_timestamp_and_date(monkeypatch):
     assert b.is_trading_day(dt.date(2026, 11, 13))
     assert not b.is_trading_day(pd.Timestamp("2026-11-14"))
     assert isinstance(seen["start"], dt.date)
+
+
+def test_alpaca_next_open_order_is_day_market():
+    """Regression 18.11.: OPG-Orders verfielen im Paper-Konto; DAY-Market über Nacht füllt zum Open."""
+    from types import SimpleNamespace
+    b = brokermod.AlpacaBroker.__new__(brokermod.AlpacaBroker)
+    sent = []
+    b.c = SimpleNamespace(submit_order=lambda req: sent.append(req))
+    b.submit_moo("SPY", 3, "buy", "20261118-SPY-buy-dow")
+    assert sent[0].time_in_force.value == "day" and sent[0].qty == 3 and sent[0].client_order_id.endswith("dow")
