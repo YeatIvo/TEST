@@ -23,6 +23,20 @@
         "filled_avg_price": 354.02,
         "placed": null,
         "filled_on": "2026-11-16 00:00:00"
+      },
+      "20261117-XLY-buy-dip": {
+        "id": "20261117-XLY-buy-dip",
+        "cid": "20261117-XLY-buy-dip",
+        "symbol": "XLY",
+        "side": "buy",
+        "qty": 1,
+        "type": "market",
+        "stop": null,
+        "status": "accepted",
+        "filled_qty": 0,
+        "filled_avg_price": null,
+        "placed": "2026-11-17 00:00:00",
+        "filled_on": null
       }
     },
     "prev_equity": 1192.4713777574934

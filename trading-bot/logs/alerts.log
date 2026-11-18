@@ -10,3 +10,8 @@ Engine QQQ unter 200-Tage-Linie → Core hält morgen GLD
 Equity $100,229 · Tagesänderung +0.21%
 • keine Orders
 2026-11-17T22:36:56 ❌ Bot-Fehler 2026-11-17: {"code":40310000,"message":"opg orders must be submitted after 7:00pm and before 9:28am"}
+2026-11-18T03:51:09 🌙 Abend-Lauf 2026-11-17
+Engine QQQ unter 200-Tage-Linie → Core hält morgen GLD
+Equity $98,200 · Tagesänderung -1.52%
+• BUY 13 SPY (down3_sma5, entry)
+• BUY 83 XLY (dip_rsi10_sma5, entry)

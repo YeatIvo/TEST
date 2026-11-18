@@ -2,12 +2,34 @@
   "core": {
     "holdings": {}
   },
-  "pending": [],
-  "hwm": null,
+  "pending": [
+    {
+      "cid": "20261117-SPY-buy-dow",
+      "symbol": "SPY",
+      "side": "buy",
+      "qty": 2,
+      "component": "sleeve:SPY:down3_sma5"
+    },
+    {
+      "cid": "20261117-XLY-buy-dip",
+      "symbol": "XLY",
+      "side": "buy",
+      "qty": 2,
+      "component": "sleeve:XLY:dip_rsi10_sma5"
+    },
+    {
+      "cid": "20261117-GLD-buy-core",
+      "symbol": "GLD",
+      "side": "buy",
+      "qty": 31,
+      "component": "core"
+    }
+  ],
+  "hwm": 2392.544859460299,
   "borrow_blocked": false,
-  "last_run": "2026-11-16",
+  "last_run": "2026-11-17",
   "last_morning": "2026-11-17",
-  "runs": 1,
+  "runs": 2,
   "sleeves": {
     "sleeve:XLI:down3_sma5": {
       "status": "flat",
@@ -21,7 +43,7 @@
       "size": null
     },
     "sleeve:SPY:down3_sma5": {
-      "status": "flat",
+      "status": "pending_entry",
       "symbol": "SPY",
       "shares": 0,
       "entry_px": null,
@@ -29,10 +51,10 @@
       "hold_days": 0,
       "stop_cid": null,
       "exit_date": null,
-      "size": null
+      "size": 0.1
     },
     "sleeve:XLY:dip_rsi10_sma5": {
-      "status": "flat",
+      "status": "pending_entry",
       "symbol": "XLY",
       "shares": 0,
       "entry_px": null,
@@ -40,7 +62,7 @@
       "hold_days": 0,
       "stop_cid": null,
       "exit_date": null,
-      "size": null
+      "size": 0.1
     }
   }
 }

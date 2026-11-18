@@ -16,7 +16,50 @@
     "cash": 2392.544859460299,
     "date": "2026-11-17",
     "pos": {},
-    "orders": {},
+    "orders": {
+      "20261117-SPY-buy-dow": {
+        "id": "20261117-SPY-buy-dow",
+        "cid": "20261117-SPY-buy-dow",
+        "symbol": "SPY",
+        "side": "buy",
+        "qty": 2,
+        "type": "market",
+        "stop": null,
+        "status": "accepted",
+        "filled_qty": 0,
+        "filled_avg_price": null,
+        "placed": "2026-11-17 00:00:00",
+        "filled_on": null
+      },
+      "20261117-XLY-buy-dip": {
+        "id": "20261117-XLY-buy-dip",
+        "cid": "20261117-XLY-buy-dip",
+        "symbol": "XLY",
+        "side": "buy",
+        "qty": 2,
+        "type": "market",
+        "stop": null,
+        "status": "accepted",
+        "filled_qty": 0,
+        "filled_avg_price": null,
+        "placed": "2026-11-17 00:00:00",
+        "filled_on": null
+      },
+      "20261117-GLD-buy-core": {
+        "id": "20261117-GLD-buy-core",
+        "cid": "20261117-GLD-buy-core",
+        "symbol": "GLD",
+        "side": "buy",
+        "qty": 31,
+        "type": "market",
+        "stop": null,
+        "status": "accepted",
+        "filled_qty": 0,
+        "filled_avg_price": null,
+        "placed": "2026-11-17 00:00:00",
+        "filled_on": null
+      }
+    },
     "prev_equity": 2392.544859460299
   }
 }
