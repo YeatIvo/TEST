@@ -79,11 +79,14 @@ class AlpacaBroker:
         return {p.symbol: int(float(p.qty)) for p in self.c.get_all_positions()}
 
     def submit_moo(self, sym, qty, side, cid):
+        """Market-Order für den nächsten Börsenstart. Bewusst time_in_force=DAY statt OPG:
+        Alpaca stellt über Nacht aufgegebene DAY-Market-Orders zum Open in den Markt und füllt sie
+        sekundenschnell (geprüft 9.–13.11.). OPG-Orders verfielen im Paper-Konto am 18.11. ungefüllt."""
         from alpaca.trading.enums import OrderSide, TimeInForce
         from alpaca.trading.requests import MarketOrderRequest
         return self.c.submit_order(MarketOrderRequest(
             symbol=sym, qty=qty, side=OrderSide.BUY if side == "buy" else OrderSide.SELL,
-            time_in_force=TimeInForce.OPG, client_order_id=cid))
+            time_in_force=TimeInForce.DAY, client_order_id=cid))
 
     def submit_stop(self, sym, qty, stop, cid):
         from alpaca.trading.enums import OrderSide, TimeInForce
