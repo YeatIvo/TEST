@@ -1,1 +1,2 @@
 {"cid": "20261117-XLY-buy-dip", "symbol": "XLY", "side": "buy", "qty": 1, "price": 117.0999984741211, "component": "sleeve:XLY:dip_rsi10_sma5", "reason": "entry", "target_value": 119.11214326891341, "sent": "2026-11-18T03:51:09"}
+{"cid": "20261118-XLY-sell-dip", "symbol": "XLY", "side": "sell", "qty": 1, "price": 119.19999694824219, "component": "sleeve:XLY:dip_rsi10_sma5", "reason": "exit", "sent": "2026-11-19T03:48:49"}
