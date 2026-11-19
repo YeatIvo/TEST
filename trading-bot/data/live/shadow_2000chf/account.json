@@ -13,11 +13,11 @@
   "deposits": [],
   "last_deposit_month": "2026-11",
   "sim": {
-    "cash": -333.1673216462684,
-    "date": "2026-11-18",
+    "cash": -94.19285498232904,
+    "date": "2026-11-19",
     "pos": {
       "SPY": 2,
-      "XLY": 2,
+      "XLY": 0,
       "GLD": 31
     },
     "orders": {
@@ -99,13 +99,13 @@
         "qty": 2,
         "type": "market",
         "stop": null,
-        "status": "accepted",
-        "filled_qty": 0,
-        "filled_avg_price": null,
+        "status": "filled",
+        "filled_qty": 2,
+        "filled_avg_price": 119.58999633789062,
         "placed": "2026-11-18 00:00:00",
-        "filled_on": null
+        "filled_on": "2026-11-19 00:00:00"
       }
     },
-    "prev_equity": 2392.544859460299
+    "prev_equity": 2360.6327882170126
   }
 }

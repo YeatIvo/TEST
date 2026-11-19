@@ -29,3 +29,6 @@
 2026-11-18T22:48:49-05:00 Schatten 1000 CHF evening: ok
 2026-11-18T22:48:49-05:00 Schatten 2000 CHF evening: ok
 2026-11-19T08:48:55-05:00 nichts zu tun
+2026-11-19T17:24:58-05:00 Morgen-Check 2026-11-19: {'date': Timestamp('2026-11-19 00:00:00'), 'notes': [], 'pending_left': 0}
+2026-11-19T17:24:58-05:00 Schatten 1000 CHF morning: ok
+2026-11-19T17:24:58-05:00 Schatten 2000 CHF morning: ok

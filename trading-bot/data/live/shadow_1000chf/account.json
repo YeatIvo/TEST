@@ -4,11 +4,11 @@
   "fx_start": 0.8359299898147583,
   "start_usd": 1196.2724297301495,
   "sim": {
-    "cash": 16.392781371537623,
-    "date": "2026-11-18",
+    "cash": 135.9229827112593,
+    "date": "2026-11-19",
     "pos": {
       "GLD": 3,
-      "XLY": 1
+      "XLY": 0
     },
     "orders": {
       "2026-11-16-GLD-mirror": {
@@ -61,13 +61,13 @@
         "qty": 1,
         "type": "market",
         "stop": null,
-        "status": "accepted",
-        "filled_qty": 0,
-        "filled_avg_price": null,
+        "status": "filled",
+        "filled_qty": 1,
+        "filled_avg_price": 119.58999633789062,
         "placed": "2026-11-18 00:00:00",
-        "filled_on": null
+        "filled_on": "2026-11-19 00:00:00"
       }
     },
-    "prev_equity": 1191.121432689134
+    "prev_equity": 1159.1627856439986
   }
 }
