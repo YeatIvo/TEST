@@ -36,3 +36,6 @@
 2026-11-19T22:41:32-05:00 Schatten 1000 CHF evening: ok
 2026-11-19T22:41:33-05:00 Schatten 2000 CHF FEHLER: Abort: Daten nicht von heute: ['GLD', 'QQQ']
 2026-11-20T08:30:52-05:00 nichts zu tun
+2026-11-20T16:56:31-05:00 Morgen-Check 2026-11-20: {'date': Timestamp('2026-11-20 00:00:00'), 'notes': [], 'pending_left': 0}
+2026-11-20T16:56:31-05:00 Schatten 1000 CHF morning: ok
+2026-11-20T16:56:32-05:00 Schatten 2000 CHF morning: ok
