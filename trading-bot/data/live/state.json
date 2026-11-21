@@ -7,9 +7,9 @@
   "pending": [],
   "hwm": 100228.85,
   "borrow_blocked": false,
-  "last_run": "2026-11-19",
+  "last_run": "2026-11-20",
   "last_morning": "2026-11-20",
-  "runs": 5,
+  "runs": 6,
   "sleeves": {
     "sleeve:QQQ:brk_hi50_lo20": {
       "status": "flat",

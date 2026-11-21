@@ -7,9 +7,9 @@
   "pending": [],
   "hwm": 2392.544859460299,
   "borrow_blocked": false,
-  "last_run": "2026-11-18",
+  "last_run": "2026-11-20",
   "last_morning": "2026-11-20",
-  "runs": 3,
+  "runs": 4,
   "sleeves": {
     "sleeve:XLI:down3_sma5": {
       "status": "flat",
@@ -28,7 +28,7 @@
       "shares": 2,
       "entry_px": 86.31999969482422,
       "entry_date": "2026-11-18",
-      "hold_days": 1,
+      "hold_days": 2,
       "stop_cid": "20261118-SPY-stop-dow",
       "exit_date": null,
       "size": 0.1
