@@ -5,7 +5,8 @@
     "safe": "GLD",
     "kind": "sma",
     "n": 200,
-    "weight": 1.0
+    "weight": 1.0,
+    "vol_target": 0.15
   },
   "sleeves": [
     {
@@ -55,5 +56,5 @@
   },
   "lineup_asof": "2026-09-30",
   "lineup_quarter": "2026Q3",
-  "version": 1
+  "version": 2
 }

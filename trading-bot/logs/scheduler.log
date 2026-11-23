@@ -49,3 +49,6 @@
 2026-11-22T13:00:13-05:00 nichts zu tun
 2026-11-22T18:47:06-05:00 nichts zu tun
 2026-11-23T03:06:24-05:00 nichts zu tun
+2026-11-23T15:29:58-05:00 Morgen-Check 2026-11-23: {'date': Timestamp('2026-11-23 00:00:00'), 'notes': [], 'pending_left': 0}
+2026-11-23T15:29:58-05:00 Schatten 1000 CHF morning: ok
+2026-11-23T15:30:00-05:00 Schatten 2000 CHF morning: ok

@@ -13,3 +13,4 @@ Was, Warum und dem zugehörigen Test eingetragen.
 | 2026-11-13 | Phase H: Bot (Alpaca Paper), Risiko-Limits, Scheduler, Telegram, Simulator | Bot handelt rules/config.json | `tests/test_bot.py` (Bot = Backtest ±0.14 %/Tag) |
 | 2026-11-13 | Phase Adapt: Kill-Lines (`rules/kill_lines.json`), Entfernungsregeln, Bank/Rotation, Paper-vs-Backtest, Reviews | Strategien altern | `tests/test_adapt.py` |
 | 2026-11-17 | Quartals-Auswahl per 2026-09-30: sleeve:XLI:down3_sma5, sleeve:SPY:down3_sma5, sleeve:XLY:dip_rsi10_sma5 (vorher sleeve:QQQ:brk_hi50_lo20, sleeve:XLK:dip_rsi10_sma5) | Re-Pick-Routine (Prompt 6), automatisch | results/repick.json |
+| 2026-11-23 | Core-Risiko-Steuerung: Anteil = 15 % / 20-Tage-Vola (10–100 %) | Wunsch nach weniger Absturz-Tagen; Training R/DD 0.63 vs 0.48, Lock CAGR 14.5 % / DD −12.4 % (vorher 18.5 % / −15.3 %) | results/lock_log.jsonl (core-sizing:voltarget15) |
