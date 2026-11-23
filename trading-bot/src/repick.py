@@ -21,7 +21,7 @@ import pandas as pd
 from . import backtest as bt
 from . import data, settings, signals, study
 from .account import account_returns
-from .core import calendar, core_returns, equity_svg
+from .core import calendar, core_returns, core_returns_cfg, equity_svg
 from .indicators import trend_up
 
 MIN_TRADES = {"dip": 10, "ibs": 10, "down3": 10, "breakout": 4, "mom": 4}
@@ -107,7 +107,7 @@ def run() -> dict:
             m[days] = True
     cfg = json.loads((settings.DIRS["rules"] / "config.json").read_text())
     core = cfg["core"]
-    core_r = core_returns(core["engine"], core["safe"], prices)
+    core_r = core_returns_cfg(core, prices)
     routine_r, _ = account_returns(core_r, list(items.values()), prices, cfg["vol_sizing_half"], allowed)
     fixed_r, _ = account_returns(core_r, cfg["sleeves"], prices, cfg["vol_sizing_half"])
     start = cal[cal > qs[0]][0]

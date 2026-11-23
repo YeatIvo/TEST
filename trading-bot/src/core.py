@@ -26,20 +26,29 @@ def calendar() -> pd.DatetimeIndex:
     return data.load_research("SPY").index
 
 
-def core_weights(engine: str, safe: str, prices: dict, kind="sma", n=200) -> pd.DataFrame:
+def core_weights(engine: str, safe: str, prices: dict, kind="sma", n=200, vol_target=None) -> pd.DataFrame:
     idx = calendar()
     on = signals.trend_switch(prices[engine]["close"], kind, n).reindex(idx)
     w = pd.DataFrame(0.0, index=idx, columns=sorted({engine, safe}))
     w.loc[on == True, engine] = 1.0
     w.loc[on == False, safe] = 1.0
     w.loc[on.isna(), :] = np.nan        # Anlaufphase: noch keine Position
+    if vol_target:
+        for t in w.columns:
+            w[t] = w[t] * signals.core_size(prices[t]["close"], vol_target).reindex(idx)
     return w
 
 
-def core_returns(engine, safe, prices, kind="sma", n=200, cost_mult=1.0) -> pd.Series:
-    w = core_weights(engine, safe, prices, kind, n)
+def core_returns(engine, safe, prices, kind="sma", n=200, cost_mult=1.0, vol_target=None) -> pd.Series:
+    w = core_weights(engine, safe, prices, kind, n, vol_target)
     costs = {t: settings.cost_per_side(t) * cost_mult for t in w.columns}
     return bt.simulate_weights(prices, w, costs)
+
+
+def core_returns_cfg(core: dict, prices: dict, cost_mult: float = 1.0) -> pd.Series:
+    """Core-Renditen genau wie im Live-Bot konfiguriert (inkl. Risiko-Steuerung)."""
+    return core_returns(core["engine"], core["safe"], prices, core.get("kind", "sma"), core.get("n", 200),
+                        cost_mult, core.get("vol_target"))
 
 
 def switches(w: pd.DataFrame, win: str) -> int:

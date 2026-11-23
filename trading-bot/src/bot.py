@@ -114,8 +114,10 @@ def decide(prices: dict, asof: pd.Timestamp, cfg: dict) -> dict:
     p = {t: d[d.index <= asof] for t, d in prices.items()}
     core = cfg["core"]
     on = signals.trend_switch(p[core["engine"]]["close"], core["kind"], core["n"]).iloc[-1]
+    sym = core["engine"] if on == True else core["safe"]
+    size = signals.core_size(p[sym]["close"], core.get("vol_target")).iloc[-1]
     out = {"asof": asof, "core_on": None if pd.isna(on) else bool(on),
-           "core_symbol": core["engine"] if on == True else core["safe"],
+           "core_symbol": sym, "core_size": 1.0 if pd.isna(size) else float(size),
            "closes": {t: float(d["close"].iloc[-1]) for t, d in p.items()},
            "last_dates": {t: d.index[-1] for t, d in p.items()}, "sleeves": {}}
     for sl in cfg["sleeves"]:
@@ -205,6 +207,7 @@ class Bot:
             if not self.dry:
                 save_state(plan["state"], self.path)
             rec = {"asof": asof, "status": "ok", "dry": self.dry, "core_symbol": d["core_symbol"],
+                   "core_size": d.get("core_size", 1.0),
                    "core_on": d["core_on"], "orders": plan["orders"], "cancels": plan["cancels"],
                    "risk": plan["risk"], "notes": notes + [ai_note], "equity": plan["equity"]}
             _log("runs", rec, self.log_dir)
@@ -277,7 +280,7 @@ class Bot:
                 rs.reasons.append(f"{sym}-Einstieg blockiert")
 
         # Core
-        core_w = self.cfg["core"]["weight"]
+        core_w = self.cfg["core"]["weight"] * d.get("core_size", 1.0)    # Risiko-Steuerung
         if rs.borrow_blocked:
             core_w = max(0.0, core_w - active_w)
         if d["core_on"] is not None:
@@ -392,7 +395,7 @@ class Bot:
     def summary(self, r) -> str:
         lines = [f"🌙 Abend-Lauf {pd.Timestamp(r['asof']).date()}{' (DRY-RUN)' if r['dry'] else ''}",
                  f"Engine {self.cfg['core']['engine']} {'über' if r['core_on'] else 'unter'} 200-Tage-Linie "
-                 f"→ Core hält morgen {r['core_symbol']}",
+                 f"→ Core hält morgen {r['core_symbol']} mit {r.get('core_size', 1.0):.0%} des Kontos",
                  f"Equity ${r['equity']:,.0f} · Tagesänderung {r['risk']['day_change']:+.2%}"]
         for o in r["orders"]:
             lines.append(f"• {o['side'].upper()} {o['qty']} {o['symbol']} ({o['component'].split(':')[-1]}, {o['reason']})")

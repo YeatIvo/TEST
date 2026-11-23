@@ -23,11 +23,11 @@ import pandas as pd
 from . import backtest as bt
 from . import data, settings
 from .account import account_returns
-from .core import core_returns, equity_svg
+from .core import core_returns_cfg, equity_svg
 
 
 def backtest_daily(cfg: dict, prices: dict) -> pd.Series:
-    core = core_returns(cfg["core"]["engine"], cfg["core"]["safe"], prices)
+    core = core_returns_cfg(cfg["core"], prices)
     return account_returns(core, [s for s in cfg["sleeves"] if s.get("enabled", True)], prices,
                            cfg["vol_sizing_half"])[0]
 
