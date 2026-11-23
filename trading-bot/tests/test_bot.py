@@ -28,7 +28,8 @@ def env(tmp_path, monkeypatch):
 def test_bot_signals_equal_backtest_last_60_days(env):
     b, br, prices, cal, _ = env
     cfg = b.cfg
-    w = core_weights(cfg["core"]["engine"], cfg["core"]["safe"], data.load_all())
+    w = core_weights(cfg["core"]["engine"], cfg["core"]["safe"], data.load_all(),
+                     vol_target=cfg["core"].get("vol_target"))
     full = {s["id"]: (signals.rule_from_dict(s["rule"]).entry(prices[s["ticker"]]),
                       signals.rule_from_dict(s["rule"]).exit(prices[s["ticker"]])) for s in cfg["sleeves"]}
     for d in cal[-60:]:
@@ -101,12 +102,12 @@ def test_order_size_check():
 def test_full_loop_matches_backtest(tmp_path):
     from src import paper_sim
     from src.account import account_returns
-    from src.core import core_returns
+    from src.core import core_returns_cfg
     cfg = botmod.load_config()
     prices = data.load_all()
     r = paper_sim.run(60, workdir=tmp_path, day_limits=False)
     e = r["equity"]
-    acc, _ = account_returns(core_returns(cfg["core"]["engine"], cfg["core"]["safe"], prices),
+    acc, _ = account_returns(core_returns_cfg(cfg["core"], prices),
                              cfg["sleeves"], prices, cfg["vol_sizing_half"])
     d = pd.DataFrame({"sim": e.pct_change(), "bt": acc.reindex(e.index)}).iloc[2:]
     assert abs((1 + d.sim).prod() - (1 + d.bt).prod()) < 0.01
@@ -162,3 +163,15 @@ def test_alpaca_next_open_order_is_day_market():
     b.c = SimpleNamespace(submit_order=lambda req: sent.append(req))
     b.submit_moo("SPY", 3, "buy", "20261118-SPY-buy-dow")
     assert sent[0].time_in_force.value == "day" and sent[0].qty == 3 and sent[0].client_order_id.endswith("dow")
+
+
+def test_core_size_volatility_target():
+    """Risiko-Steuerung: ruhig -> 100 %, sehr volatil -> weniger, nie unter 10 %."""
+    import numpy as np
+    from src.signals import core_size
+    idx = pd.bdate_range("2024-01-01", periods=60)
+    calm = pd.Series(100 * np.cumprod(1 + np.random.default_rng(1).normal(0, 0.003, 60)), idx)
+    wild = pd.Series(100 * np.cumprod(1 + np.random.default_rng(2).normal(0, 0.04, 60)), idx)
+    assert core_size(calm, 0.15).iloc[-1] == 1.0
+    assert 0.1 <= core_size(wild, 0.15).iloc[-1] < 0.4
+    assert (core_size(calm, None) == 1.0).all()

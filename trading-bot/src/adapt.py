@@ -21,7 +21,7 @@ import pandas as pd
 
 from . import backtest as bt
 from . import data, settings, signals
-from .core import calendar, core_returns
+from .core import calendar, core_returns, core_returns_cfg
 
 RULES = settings.DIRS["rules"]
 
@@ -48,7 +48,7 @@ def write_kill_lines() -> dict:
     cfg = json.loads((RULES / "config.json").read_text())
     bench = json.loads((RULES / "bench.json").read_text())
     core = cfg["core"]
-    core_dd = abs(bt.max_drawdown(bt.equity(bt.window_slice(core_returns(core["engine"], core["safe"], prices),
+    core_dd = abs(bt.max_drawdown(bt.equity(bt.window_slice(core_returns_cfg(core, prices),
                                                              _full_period()))))
     out = {"core": {"worst_dd": core_dd, "alert_line": 1.5 * core_dd}, "sleeves": {}}
     for it in {x["id"]: x for x in cfg["sleeves"] + bench}.values():
@@ -121,7 +121,7 @@ def rotate(out_id: str, in_id: str, apply: bool = False) -> dict:
     rest = [s for s in live if s["id"] != out_id]
     per = _full_period()
     stream = lambda it: bt.window_slice(sleeve_result(it["ticker"], signals.rule_from_dict(it["rule"]), prices).daily, per)
-    core_r = core_returns(cfg["core"]["engine"], cfg["core"]["safe"], prices)
+    core_r = core_returns_cfg(cfg["core"], prices)
     ns = stream(new)
     corr = max([ns.corr(bt.window_slice(core_r, per))] + [ns.corr(stream(s)) for s in rest])
     with_new = bt.metrics(bt.window_slice(account_returns(core_r, rest + [new], prices, cfg["vol_sizing_half"])[0], per))
