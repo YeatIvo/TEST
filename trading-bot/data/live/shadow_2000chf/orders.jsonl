@@ -2,3 +2,5 @@
 {"cid": "20261117-XLY-buy-dip", "symbol": "XLY", "side": "buy", "qty": 2, "price": 117.0999984741211, "component": "sleeve:XLY:dip_rsi10_sma5", "reason": "entry", "target_value": 239.25448594602992, "sent": "2026-11-18T03:51:10"}
 {"cid": "20261117-GLD-buy-core", "symbol": "GLD", "side": "buy", "qty": 31, "price": 76.0999984741211, "component": "core", "reason": "enter", "target_value": 2392.544859460299, "sent": "2026-11-18T03:51:10"}
 {"cid": "20261118-XLY-sell-dip", "symbol": "XLY", "side": "sell", "qty": 2, "price": 119.19999694824219, "component": "sleeve:XLY:dip_rsi10_sma5", "reason": "exit", "sent": "2026-11-19T03:48:49"}
+{"cid": "20261123-SPY-sell-dow", "symbol": "SPY", "side": "sell", "qty": 2, "price": 85.04000091552734, "component": "sleeve:SPY:down3_sma5", "reason": "exit", "sent": "2026-11-24T04:56:38"}
+{"cid": "20261123-GLD-sell-core", "symbol": "GLD", "side": "sell", "qty": 17, "price": 71.87000274658203, "component": "core", "reason": "rebalance", "target_value": 1031.0452246638702, "sent": "2026-11-24T04:56:38"}

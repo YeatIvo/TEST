@@ -4,12 +4,20 @@
       "GLD": 281
     }
   },
-  "pending": [],
+  "pending": [
+    {
+      "cid": "20261123-GLD-sell-core",
+      "symbol": "GLD",
+      "side": "sell",
+      "qty": 156,
+      "component": "core"
+    }
+  ],
   "hwm": 100228.85,
   "borrow_blocked": false,
-  "last_run": "2026-11-20",
+  "last_run": "2026-11-23",
   "last_morning": "2026-11-23",
-  "runs": 6,
+  "runs": 7,
   "sleeves": {
     "sleeve:QQQ:brk_hi50_lo20": {
       "status": "flat",

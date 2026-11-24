@@ -71,7 +71,7 @@
         "qty": 2,
         "type": "stop",
         "stop": 79.41,
-        "status": "new",
+        "status": "canceled",
         "filled_qty": 0,
         "filled_avg_price": null,
         "placed": "2026-11-18 00:00:00",
@@ -104,6 +104,34 @@
         "filled_avg_price": 119.58999633789062,
         "placed": "2026-11-18 00:00:00",
         "filled_on": "2026-11-19 00:00:00"
+      },
+      "20261123-SPY-sell-dow": {
+        "id": "20261123-SPY-sell-dow",
+        "cid": "20261123-SPY-sell-dow",
+        "symbol": "SPY",
+        "side": "sell",
+        "qty": 2,
+        "type": "market",
+        "stop": null,
+        "status": "accepted",
+        "filled_qty": 0,
+        "filled_avg_price": null,
+        "placed": "2026-11-23 00:00:00",
+        "filled_on": null
+      },
+      "20261123-GLD-sell-core": {
+        "id": "20261123-GLD-sell-core",
+        "cid": "20261123-GLD-sell-core",
+        "symbol": "GLD",
+        "side": "sell",
+        "qty": 17,
+        "type": "market",
+        "stop": null,
+        "status": "accepted",
+        "filled_qty": 0,
+        "filled_avg_price": null,
+        "placed": "2026-11-23 00:00:00",
+        "filled_on": null
       }
     },
     "prev_equity": 2229.3328141463694
