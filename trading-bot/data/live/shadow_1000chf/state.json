@@ -1,22 +1,14 @@
 {
   "core": {
     "holdings": {
-      "GLD": 3
+      "GLD": 1
     }
   },
-  "pending": [
-    {
-      "cid": "20261123-GLD-sell-core",
-      "symbol": "GLD",
-      "side": "sell",
-      "qty": 2,
-      "component": "core"
-    }
-  ],
+  "pending": [],
   "hwm": 1191.121432689134,
   "borrow_blocked": false,
   "last_run": "2026-11-23",
-  "last_morning": "2026-11-23",
+  "last_morning": "2026-11-24",
   "runs": 6,
   "sleeves": {
     "sleeve:XLI:down3_sma5": {

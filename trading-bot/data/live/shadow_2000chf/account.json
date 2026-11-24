@@ -13,12 +13,12 @@
   "deposits": [],
   "last_deposit_month": "2026-11",
   "sim": {
-    "cash": -94.24145280127011,
-    "date": "2026-11-23",
+    "cash": 1289.6668958851722,
+    "date": "2026-11-24",
     "pos": {
-      "SPY": 2,
+      "SPY": 0,
       "XLY": 0,
-      "GLD": 31
+      "GLD": 14
     },
     "orders": {
       "20261117-SPY-buy-dow": {
@@ -113,11 +113,11 @@
         "qty": 2,
         "type": "market",
         "stop": null,
-        "status": "accepted",
-        "filled_qty": 0,
-        "filled_avg_price": null,
+        "status": "filled",
+        "filled_qty": 2,
+        "filled_avg_price": 84.18000030517578,
         "placed": "2026-11-23 00:00:00",
-        "filled_on": null
+        "filled_on": "2026-11-24 00:00:00"
       },
       "20261123-GLD-sell-core": {
         "id": "20261123-GLD-sell-core",
@@ -127,13 +127,13 @@
         "qty": 17,
         "type": "market",
         "stop": null,
-        "status": "accepted",
-        "filled_qty": 0,
-        "filled_avg_price": null,
+        "status": "filled",
+        "filled_qty": 17,
+        "filled_avg_price": 71.54499816894531,
         "placed": "2026-11-23 00:00:00",
-        "filled_on": null
+        "filled_on": "2026-11-24 00:00:00"
       }
     },
-    "prev_equity": 2229.3328141463694
+    "prev_equity": 2303.8086341738276
   }
 }

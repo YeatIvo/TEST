@@ -4,10 +4,10 @@
   "fx_start": 0.8359299898147583,
   "start_usd": 1196.2724297301495,
   "sim": {
-    "cash": 135.9229827112593,
-    "date": "2026-11-23",
+    "cash": 798.451538070146,
+    "date": "2026-11-24",
     "pos": {
-      "GLD": 3,
+      "GLD": 1,
       "XLY": 0
     },
     "orders": {
@@ -75,13 +75,13 @@
         "qty": 2,
         "type": "market",
         "stop": null,
-        "status": "accepted",
-        "filled_qty": 0,
-        "filled_avg_price": null,
+        "status": "filled",
+        "filled_qty": 2,
+        "filled_avg_price": 331.42999267578125,
         "placed": "2026-11-23 00:00:00",
-        "filled_on": null
+        "filled_on": "2026-11-24 00:00:00"
       }
     },
-    "prev_equity": 1104.5329680628217
+    "prev_equity": 1134.9829497522749
   }
 }

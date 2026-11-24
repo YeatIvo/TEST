@@ -1,29 +1,14 @@
 {
   "core": {
     "holdings": {
-      "GLD": 31
+      "GLD": 14
     }
   },
-  "pending": [
-    {
-      "cid": "20261123-SPY-sell-dow",
-      "symbol": "SPY",
-      "side": "sell",
-      "qty": 2,
-      "component": "sleeve:SPY:down3_sma5"
-    },
-    {
-      "cid": "20261123-GLD-sell-core",
-      "symbol": "GLD",
-      "side": "sell",
-      "qty": 17,
-      "component": "core"
-    }
-  ],
+  "pending": [],
   "hwm": 2392.544859460299,
   "borrow_blocked": false,
   "last_run": "2026-11-23",
-  "last_morning": "2026-11-23",
+  "last_morning": "2026-11-24",
   "runs": 5,
   "sleeves": {
     "sleeve:XLI:down3_sma5": {
@@ -38,15 +23,18 @@
       "size": null
     },
     "sleeve:SPY:down3_sma5": {
-      "status": "pending_exit",
+      "status": "flat",
       "symbol": "SPY",
-      "shares": 2,
+      "shares": 0,
       "entry_px": 86.31999969482422,
       "entry_date": "2026-11-18",
       "hold_days": 3,
-      "stop_cid": "20261118-SPY-stop-dow",
-      "exit_date": null,
-      "size": 0.1
+      "stop_cid": null,
+      "exit_date": "2026-11-24",
+      "size": 0.1,
+      "closed": [
+        -0.025766431334763862
+      ]
     },
     "sleeve:XLY:dip_rsi10_sma5": {
       "status": "flat",
