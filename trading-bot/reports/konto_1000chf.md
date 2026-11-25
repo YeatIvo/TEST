@@ -1,20 +1,20 @@
 # Schatten-Konto 1000 CHF
 
-Stand 2026-11-23 · Start 2026-11-16 mit 1000 CHF (= $1,196.27 bei 0.8359 CHF/USD)
+Stand 2026-11-24 · Start 2026-11-16 mit 1000 CHF (= $1,196.27 bei 0.8359 CHF/USD)
 
 | | |
 |---|---|
-| **Wert heute** | **954.99 CHF** ($1,134.98 bei 0.8414) |
+| **Wert heute** | **939.20 CHF** ($1,123.90 bei 0.8357) |
 | Eingezahlt | 1,000 CHF (0 Monats-Einzahlungen) |
-| **Gewinn/Verlust** | **-45.01 CHF (-4.50%)** |
-| davon Trading (in USD) | -61.29 USD (-5.12%) |
-| davon Wechselkurs | +6.56 CHF |
-| Investiert | 88% (Rest Cash – nur ganze Aktien möglich) |
-| Cash | $135.92 |
-| Trades bisher | 3 · mit 5 CHF Bankgebühr/Trade wären es -60.01 CHF |
+| **Gewinn/Verlust** | **-60.80 CHF (-6.08%)** |
+| davon Trading (in USD) | -72.37 USD (-6.05%) |
+| davon Wechselkurs | -0.32 CHF |
+| Investiert | 29% (Rest Cash – nur ganze Aktien möglich) |
+| Cash | $798.45 |
+| Trades bisher | 4 · mit 5 CHF Bankgebühr/Trade wären es -80.80 CHF |
 
 | Position | Stück | Kurs | Wert |
 |---|---|---|---|
-| GLD | 3 | $333.02 | $999.06 |
+| GLD | 1 | $325.45 | $325.45 |
 
 Simuliert: gleiche Regeln und Signale wie das Paper-Konto, Kauf zum echten Eröffnungskurs, ganze Aktien, 0.05 % Spread. Alpaca selbst verlangt keine Kommission.
